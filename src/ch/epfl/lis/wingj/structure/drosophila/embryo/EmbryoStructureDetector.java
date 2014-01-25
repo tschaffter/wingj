@@ -303,7 +303,6 @@ public class EmbryoStructureDetector extends StructureDetector {
 			// END
 			throw e;
 		}
-
 	}
 	
 	// ----------------------------------------------------------------------------

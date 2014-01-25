@@ -4,7 +4,7 @@ WingJ is an ImageJ plugin for unsupervised and systematic segmentation of *Droso
 
 ## Setup builder (for development only)
 
-The ant file "build.xml" describes the compilation process for the generation of *lib/wingj-1.0_.jar*, for example. The shortcut *Ctral+B* is used to compile WingJ. In order to enable this, one must:
+The ant file "build.xml" describes the compilation process for the generation of *lib/wingj_.jar*, for example. The shortcut *Ctral+B* is used to compile WingJ. In order to enable this, one must:
 
 1. Project > Properties > Builders
 2. If "New_Builder" exists, there's nothing to do. Otherwise click on *New...*
@@ -71,7 +71,34 @@ Analytics code blocks are defined as
 
 ## List of Analytics code blocks
 
-#### ch.epfl.lis.wingj.actionPerformed(ActionEvent e)
+#### ch.epfl.lis.wingj.WingJ
+
+At the end of the private constructor WingJ():
+
+```java
+	// DO NOT REMOVE THIS LINE
+	// ANALYTICS CODE: START
+	Analytics.getInstance().start();
+	// END
+```
+
+In computeExpressionDataset(boolean save) for datasetType == WJSettings.EXPRESSION_DATASET_1D:
+
+```java
+		// DO NOT REMOVE THIS LINE
+		// ANALYTICS CODE: START
+		Analytics.getInstance().addExpressionDataset(ExpressionStats.EXPRESSION_PROFILE, 1);
+		// END
+```
+
+Idem for:
+
+* datasetType == WJSettings.EXPRESSION_DATASET_2D (ExpressionStats.EXPRESSION_MAP)
+* datasetType == WJSettings.EXPRESSION_DATASET_2D_REVERSE (ExpressionStats.EXPRESSION_MAP_REVERSED)
+* datasetType == WJSettings.EXPRESSION_DATASET_2D_AGGREGATED (ExpressionStats.MEAN_MODEL)
+* datasetType == WJSettings.EXPRESSION_DATASET_COMPOSITE (ExpressionStats.COMPOSITE)
+
+In actionPerformed(ActionEvent e):
 
 ```java
 	} catch (OutOfMemoryError oome) {

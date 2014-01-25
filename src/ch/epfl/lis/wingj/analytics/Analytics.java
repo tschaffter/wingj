@@ -209,7 +209,13 @@ public class Analytics {
         AnalyticsServerResponse response = null;
         try {
 	        Gson gson = new Gson(); // or use new GsonBuilder().create();
-	        response = gson.fromJson(json, AnalyticsServerResponse.class);
+	        try {
+	        	response = gson.fromJson(json, AnalyticsServerResponse.class);
+	        } catch (Exception e) {
+	        	response = new AnalyticsServerResponse();
+	        	response.setMessage("Unable to deserialize server response: " + json);
+	        	throw e;
+	        }
         } catch (Exception e) {
         	sendAnalyticsServerErrorEmail("Invalid INSERT JSON object received.", response, params);
         	return;
@@ -277,7 +283,13 @@ public class Analytics {
         AnalyticsServerResponse response = null;
         try {
 	        Gson gson = new Gson(); // or use new GsonBuilder().create();
-	        response = gson.fromJson(json, AnalyticsServerResponse.class);
+	        try {
+	        	response = gson.fromJson(json, AnalyticsServerResponse.class);
+	        } catch (Exception e) {
+	        	response = new AnalyticsServerResponse();
+	        	response.setMessage("Unable to deserialize server response: " + json);
+	        	throw e;
+	        }
         } catch (Exception e) {
         	sendAnalyticsServerErrorEmail("Invalid UPDATE JSON object received.", response, params);
         	return;
@@ -584,7 +596,6 @@ public class Analytics {
 		 
 		@SuppressWarnings("unused")
 		public String getMessage() { return message; }
-		@SuppressWarnings("unused")
 		public void setMessage(String message) { this.message = message; }
 		 
 		@SuppressWarnings("unused")

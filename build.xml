@@ -7,7 +7,7 @@
 	<property name="compile.debug" value="true" />
 	<!--<property name="imagej" location="/home/tschaffter/devel/java/imagej/" />--> <!-- ImageJ folder -->
     <!--<property name="jar" location="${imagej}/lib/${ant.project.name}-${version}_.jar" />--> <!-- WingJ binary -->
-	<property name="jar" location="${lib}/${ant.project.name}-${version}_.jar" />
+	<property name="jar" location="${lib}/${ant.project.name}_.jar" />
 
 	<!-- Initialization target, for any prelimary setup needed to build -->
 	<target name="init" description="Preparation">

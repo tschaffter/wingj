@@ -11,7 +11,7 @@
 <center>Example images, user manual and <br>video tutorials are available on wingj.org</center>
 <center>Click on <b>Reset</b> to reset WingJ<br>and close all windows opened</center>
 <center>WingJ opens at startup the settings file <br> <i>USER_HOME</i>/WingJ/settings.txt (if it exists)</center>
-<center>See WingJ User Manual for information about file<br>naming conventions and directory structure used in WingJ</center>
+<center>See User Manual for information about file naming<br>conventions and directory structure used in WingJ</center>
 <center>Use the filenames proposed by WingJ to ensure<br>compatibility with the WingJ Matlab Toolbox</center>
 <center>The WingJ Matlab Toolbox provides scripts<br>to automate the generation of statistical analyses</center>
 <center>Avoid closing image windows manually,<br>instead let WingJ closes them when required</center>
