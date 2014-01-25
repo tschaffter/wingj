@@ -159,9 +159,9 @@ abstract public class StructureDetector {
 		// DO NOT REMOVE THIS LINE
 		// ANALYTICS CODE: START
 		if (interactive_) // supervised detection
-		  Analytics.getInstance().addStructureDetection(StructureDetectionStats.SUPERVISED_STRUCTURE_DETECTION, 1.0/detections_.size());
+			Analytics.getInstance().addStructureDetection(StructureDetectionStats.SUPERVISED_STRUCTURE_DETECTION, 1.0/detections_.size());
 		else // automatic detection
-		  Analytics.getInstance().addStructureDetection(StructureDetectionStats.AUTO_STRUCTURE_DETECTION, 1.0/detections_.size());
+			Analytics.getInstance().addStructureDetection(StructureDetectionStats.AUTO_STRUCTURE_DETECTION, 1.0/detections_.size());
 		// END
 
 		// Check if the last detection module has been performed

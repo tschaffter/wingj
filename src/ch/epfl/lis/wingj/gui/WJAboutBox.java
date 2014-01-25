@@ -128,7 +128,7 @@ public class WJAboutBox extends JDialog {
 		infoPanel.add(Box.createRigidArea(new Dimension(0,10)), gca);
 		
 		// title
-		JLabel title = new JLabel("<html><b>Towards unsupervised and systematic quantification of biological systems</b></html>");
+		JLabel title = new JLabel("<html><b>Towards unsupervised and systematic segmentation of biological organisms</b></html>");
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.anchor = GridBagConstraints.NORTH;
 		gc.gridy = gridy++;
@@ -249,8 +249,8 @@ public class WJAboutBox extends JDialog {
 		JPanel copyrightPanel = new JPanel();
 		copyrightPanel.setLayout(new FlowLayout());
 		// prefix
-		JLabel copyright = new JLabel("Coypright © 2011-2013");
-		HyperText websiteUrl = new HyperText("http://wingj.org", "http://wingj.org",  "<b>", "</b>") {
+		JLabel copyright = new JLabel("Coypright © 2011-2014");
+		HyperText websiteUrl = new HyperText("wingj.org", "http://wingj.org",  "<b>", "</b>") {
 			/** Default serial */
 			private static final long serialVersionUID = 1L;
 			@Override

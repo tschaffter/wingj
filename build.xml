@@ -2,14 +2,17 @@
 <project name="wingj" default="install" basedir=".">
 	<property name="version" value="1.0" />
 	<property name="src" location="src" />
+	<property name="lib" location="lib" />
 	<property name="bin" location="bin" />
 	<property name="compile.debug" value="true" />
-	<property name="imagej" location="/home/tschaffter/devel/java/imagej/" /> <!-- ImageJ folder -->
-    <property name="jar" location="${imagej}/lib/${ant.project.name}-${version}_.jar" /> <!-- WingJ binary -->
+	<!--<property name="imagej" location="/home/tschaffter/devel/java/imagej/" />--> <!-- ImageJ folder -->
+    <!--<property name="jar" location="${imagej}/lib/${ant.project.name}-${version}_.jar" />--> <!-- WingJ binary -->
+	<property name="jar" location="${lib}/${ant.project.name}-${version}_.jar" />
 
 	<!-- Initialization target, for any prelimary setup needed to build -->
 	<target name="init" description="Preparation">
 		<mkdir dir="${src}" />
+		<mkdir dir="${lib}" />
 		<mkdir dir="${bin}" />
 	</target>
 
@@ -25,8 +28,8 @@
 			deprecation="on" 
 			srcdir="${src}" 
 			destdir="${bin}"
-			source="1.7" 
-			target="1.7"
+			source="1.6" 
+			target="1.6"
 			includeAntRuntime="no"
 			debug="${compile.debug}">
 		</javac>

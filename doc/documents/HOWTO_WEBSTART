@@ -15,11 +15,11 @@ June 21, 2011
    - jfreechart-1.0.13.jar
    - wingj_.jar
 
-3. Edit IJ_Props.txt
+3. Edit IJ_Props.txt (deprecated)
    - add: plug-in06=-
    - add: plug-in07="WingJ",wingj.WJPlugIn
 
-4. Edit ij.ImageJ
+4. Edit ij.ImageJ (deprecated)
    - add in public static void main(String args[]):
     // ============================================================================
     // START WINGJ AT STARTUP
