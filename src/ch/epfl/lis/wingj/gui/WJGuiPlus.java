@@ -171,7 +171,7 @@ abstract public class WJGuiPlus extends WJGui implements ActionListener, ItemLis
 		// FILL SYSTEM COMBOBOX
 		WJSystemManager smanager = WJSystemManager.getInstance();
 		systemCBox_.removeAllItems();
-		systemCBox_.setModel(new DefaultComboBoxModel(smanager.getSystemNames()));
+		systemCBox_.setModel(new DefaultComboBoxModel<String>(smanager.getSystemNames()));
 		// set tooltip
 		String systemDescription = WJSystemManager.getInstance().getSystemDescription(systemCBox_.getSelectedIndex());
 		systemCBox_.setToolTipText(systemDescription);
