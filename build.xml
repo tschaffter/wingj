@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="wingj" default="install" basedir=".">
+	<property name="version" value="1.0" />
+	<property name="src" location="src" />
+	<property name="bin" location="bin" />
+	<property name="compile.debug" value="true" />
+	<property name="imagej" location="/home/tschaffter/devel/java/imagej/" /> <!-- ImageJ folder -->
+    <property name="jar" location="${imagej}/lib/${ant.project.name}-${version}_.jar" /> <!-- WingJ binary -->
+
+	<!-- Initialization target, for any prelimary setup needed to build -->
+	<target name="init" description="Preparation">
+		<mkdir dir="${src}" />
+		<mkdir dir="${bin}" />
+	</target>
+
+	<!-- Compiles .java files inside the $src directory -->
+	<target name="compile" depends="init" description="Compile code">
+		<echo message="java.version			= ${java.version}" />
+		<echo message="java.vm.name			= ${java.vm.name} "/>
+		<echo message="java.vm.version		= ${java.vm.version}" />
+	    <echo message="java.home			= ${java.home}" />  
+		<echo message="java.library.path	= ${java.library.path}" />
+		<echo message="java.runtime.version	= ${java.runtime.version}" />
+		<javac
+			deprecation="on" 
+			srcdir="${src}" 
+			destdir="${bin}"
+			source="1.7" 
+			target="1.7"
+			includeAntRuntime="no"
+			debug="${compile.debug}">
+		</javac>
+	</target>
+	
+	<!-- classpathref="lib.path" -->
+	
+    <target name="install" depends="compile" description="Copy classes to ImageJ plugin directory">
+        <jar destfile="${jar}" basedir="${bin}" />
+    </target>
+
+    <target name="clean" description="Clean up build products">
+        <delete dir="${bin}" />
+    </target>
+</project>
+

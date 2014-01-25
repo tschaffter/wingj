@@ -1,0 +1,4 @@
+macro "AutoRun" { 
+    print("Starting WingJ");
+    run("WingJ ");
+}

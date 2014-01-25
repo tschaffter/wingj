@@ -1,0 +1,148 @@
+###################################################
+# Configuration file for WingJ
+# wingj.sourceforge.net
+###################################################
+
+# All variables that are loaded by WJSettings must be specified in this file, otherwise an Exception will be thrown and a warning message displayed.
+
+# Comments must start with the char '#'
+# Boolean values: 0 => false, 1 => true
+
+#========================================
+# GENERAL
+
+# Output directory
+outputDirectory = "/home/tschaffter/"
+# Activate debug mode
+debug = 0
+
+# Channel index of the structure to detect (default: 0)
+structureChannelIndex = 0
+
+#========================================
+# CONFOCAL IMAGES
+
+# Experiment name
+experimentName = "my_experiment"
+# Name of the gene/protein/marker used for each channel (structure)
+gene0Name = "protein_0"
+gene1Name = "protein_1"
+gene2Name = "protein_2"
+gene3Name = "protein_3"
+# Intensity projection method for each gene (0 = MEAN, 1 = MAX)
+gene0ProjectionMethod = 1
+gene1ProjectionMethod = 0
+gene2ProjectionMethod = 0
+gene3ProjectionMethod = 0
+
+# Distance unit ("nm", "um", "micron", "mm", "cm", "meter", "km" or "inch", default: um). Note that this parameter is only read at WingJ startup.
+unit = "um"
+# Scale [px/um]
+scale = 0.37841796604334377
+
+#========================================
+# PRE-PROCESSING
+
+# Blur (0 to 100)
+ppBlur = 10
+# Threshold (0 to 255)
+ppThreshold = 75
+
+#========================================
+# STRUCTURE
+
+# Projection opacity: alpha (0 to 1)
+# Dilated skeleton opacity: 1-alpha
+snakeAlpha = 1.0
+# Blur (0 to 100)
+snakeBlur = 20
+# Lambda (0 to 1)
+snakeLambda = 0.85
+# Radius
+snakeRadius = 45
+# Rate
+snakeRate = 50
+# Number of nodes
+snakeNumNodes = 8
+# Manual detection: radius of the circle used as default shape for the structure, fraction of min(image width, image height) (0.1 to 0.4)
+genericShapeRadius = 0.3
+Maximum number of iterations for detecting the wing pouch center (kite-snake)
+wPouchCenterDetectionMaxIter = 1000
+# Correction of the location boundaries intersection (default: true)
+correctBoundariesShape = 1
+
+#========================================
+# EXPRESSION
+
+# Reference boundary along which expression is measured (0 = D/V boundary, 1 = A/P boundary)
+expressionBoundary = 0
+# Offset in % of the considered "branch" defining how far from the reference boundary expression is measured (-100 to 100)
+expressionOffset = 0.0
+# Sigma in [um] of the 1D Gaussian filter used to measure expression (1 to 50)
+expressionSigma = 4.0
+# Use a fixed number of points (=0) or take a measurement points every X um (=1) ?
+expressionDataset1dSamplingStrategy = 0
+# Number of measurement points for 1D expression dataset (default: 1000)
+expressionDataset1dNumPoints = 1000
+# Take one measurement points every X um (default: 1.0 um)
+expressionDataset1dSamplingRate = 1.0
+# List of offsets for boundary translations sampled from [-100., 100.] (default: "-25./-15./-5./0./5./15./25.")
+expressionOffsets = "-25.0/-15.0/-5.0/0.0/5.0/15.0/25.0"
+
+# Resolution to sample 2D expression profiles in percent (0.01 is 1%) of compartment boundary lengths
+expressionDataset2dSquaredResolution = 0.0010
+# Resolution to sample 2D expression profiles in [um] along compartment boundaries
+expressionDataset2dProportionalResolution = 0.1
+# Default 2D grid for grid stitching (1 = D/V boundary (A-P axis), 2 = A/P boundary (D-V axis))
+stitchingDefaultGrid = 1
+# Smoothing the grid density (density of the vertices of the grid)
+stitchingGridDensitySmoothing = 10.0
+# Threshold for the difference between two density maps for grid stitching
+stitchingDensityDifferenceThld = 3.0
+# Smoothing along stitches
+stitchingSmoothingRange = 800.0
+
+# Selected min and max slice indexes for each channel
+expressionCh00MinSliceIndex = 0
+expressionCh00MaxSliceIndex = 0
+expressionCh01MinSliceIndex = 0
+expressionCh01MaxSliceIndex = 0
+expressionCh02MinSliceIndex = 0
+expressionCh02MaxSliceIndex = 0
+expressionCh03MinSliceIndex = 0
+expressionCh03MaxSliceIndex = 0
+
+# Normalize expression values
+normalizeExpression = 0
+# Density of the 2D mesh grid for preview visualization only
+previewMeshGridDensity = 0.05
+
+#========================================
+# BATCH EXPERIMENTS
+
+# Defines which channels to load automatically in batch mode
+batchCh00AutoLoading = 1
+batchCh01AutoLoading = 1
+batchCh02AutoLoading = 0
+batchCh03AutoLoading = 0
+
+#========================================
+# MISC
+
+# Number of nodes per spline for the detected wing structure (snake)
+finalSnakeNumNodes = 3
+# Default color used to draw polygons, rois, etc.
+defaultColor = "00ff00"
+# ROI stroke width of the detected wing pouch structure
+defaultStrokeWidth = 1.3
+# Overlay font size coefficient, e.g. displayed on top of the detected structure
+structureOverlayFontSizeCoeff = 40.0
+
+#========================================
+# PARAMETERS SAVED BUT NOT LOADED
+
+# Path containing the loaded confocal images for each channel
+ch00Directory = ""
+ch01Directory = ""
+ch02Directory = ""
+ch03Directory = ""

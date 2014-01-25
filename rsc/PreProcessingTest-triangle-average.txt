@@ -1,0 +1,63 @@
+Total number of benchmarks: 50
+Number of successful pre-processing threshold inferences: 50 (100%)
+Average pre-processing threshold error: 12.28 (zero thresholds discarded)
+
+Success rate for 20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_110,5-111,5H: 100%
+Success rate for 20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_78-79H: 100%
+Success rate for 20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_90-91H: 100%
+Success rate for 20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_99-100H: 100%
+Success rate for 20100716_pmadAB_brkAB_wg-ptcAB_110,5-111,5H: 100%
+Success rate for 20100716_pmadAB_brkAB_wg-ptcAB_78-79H: 100%
+Success rate for 20100716_pmadAB_brkAB_wg-ptcAB_90,5-91,5H: 100%
+Success rate for 20100716_pmadAB_brkAB_wg-ptcAB_99-100H: 100%
+
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_110,5-111,5H_M_1:	140/140
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_110,5-111,5H_M_2:	140/135
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_110,5-111,5H_M_3:	140/135
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_110,5-111,5H_M_4:	142/140
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_110,5-111,5H_M_5:	141/140
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_78-79H_F_1:	112/130
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_78-79H_F_2:	113/135
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_78-79H_F_3:	134/132
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_78-79H_F_4:	118/140
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_78-79H_F_5:	132/125
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_90-91H_M_1:	114/130
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_90-91H_M_2:	84/120
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_90-91H_M_3:	135/130
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_90-91H_M_4:	103/120
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_90-91H_M_5:	127/120
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_99-100H_M_1:	126/130
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_99-100H_M_2:	120/120
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_99-100H_M_3:	122/120
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_99-100H_M_4:	123/115
+20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_99-100H_M_5:	123/125
+20100716_pmadAB_brkAB_wg-ptcAB_110,5-111,5H_M_1:	158/140
+20100716_pmadAB_brkAB_wg-ptcAB_110,5-111,5H_M_2:	149/170
+20100716_pmadAB_brkAB_wg-ptcAB_110,5-111,5H_M_3:	149/160
+20100716_pmadAB_brkAB_wg-ptcAB_110,5-111,5H_M_4:	149/160
+20100716_pmadAB_brkAB_wg-ptcAB_110,5-111,5H_M_5:	209/160
+20100716_pmadAB_brkAB_wg-ptcAB_110,5-111,5H_M_6:	206/170
+20100716_pmadAB_brkAB_wg-ptcAB_110,5-111,5H_M_7:	151/180
+20100716_pmadAB_brkAB_wg-ptcAB_78-79H_M_1:	113/120
+20100716_pmadAB_brkAB_wg-ptcAB_78-79H_M_10:	128/130
+20100716_pmadAB_brkAB_wg-ptcAB_78-79H_M_2:	122/140
+20100716_pmadAB_brkAB_wg-ptcAB_78-79H_M_3:	142/130
+20100716_pmadAB_brkAB_wg-ptcAB_78-79H_M_4:	133/125
+20100716_pmadAB_brkAB_wg-ptcAB_78-79H_M_5:	143/145
+20100716_pmadAB_brkAB_wg-ptcAB_78-79H_M_6:	116/130
+20100716_pmadAB_brkAB_wg-ptcAB_78-79H_M_7:	132/150
+20100716_pmadAB_brkAB_wg-ptcAB_78-79H_M_8:	132/130
+20100716_pmadAB_brkAB_wg-ptcAB_78-79H_M_9:	116/130
+20100716_pmadAB_brkAB_wg-ptcAB_90,5-91,5H_M_1:	134/140
+20100716_pmadAB_brkAB_wg-ptcAB_90,5-91,5H_M_2:	138/120
+20100716_pmadAB_brkAB_wg-ptcAB_90,5-91,5H_M_3:	140/120
+20100716_pmadAB_brkAB_wg-ptcAB_90,5-91,5H_M_4:	146/130
+20100716_pmadAB_brkAB_wg-ptcAB_90,5-91,5H_M_5:	143/140
+20100716_pmadAB_brkAB_wg-ptcAB_90,5-91,5H_M_6:	143/135
+20100716_pmadAB_brkAB_wg-ptcAB_90,5-91,5H_M_7:	144/140
+20100716_pmadAB_brkAB_wg-ptcAB_99-100H_M_1:	140/140
+20100716_pmadAB_brkAB_wg-ptcAB_99-100H_M_2:	150/130
+20100716_pmadAB_brkAB_wg-ptcAB_99-100H_M_3:	99/120
+20100716_pmadAB_brkAB_wg-ptcAB_99-100H_M_4:	137/120
+20100716_pmadAB_brkAB_wg-ptcAB_99-100H_M_5:	143/140
+20100716_pmadAB_brkAB_wg-ptcAB_99-100H_M_6:	140/115

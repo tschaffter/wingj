@@ -1,0 +1,269 @@
+        % -----------------------------------------------------------------
+        
+        % Instantiate nuclei from watershed output
+        % IMPORTANT: Simply too slow...
+        function instantiateNuclei(obj)
+                
+            if isempty(obj.W)
+                error('ERROR: obj.W is empty.');
+            end
+            
+            settings = Settings.getInstance;
+            % list of nuclei to fill
+            obj.nuclei = Nucleus.empty(obj.numNuclei,0);
+            for i=1:obj.numNuclei
+                % keep only one element
+                E = obj.W;
+                E(E~=i) = 0;
+                % create nucleus object with x, y, z coordinates [um]
+                n = Nucleus(mean(find(sum(E,1))) * settings.scale,...
+                    mean(find(sum(E,2))) * settings.scale,...
+                    mean(find(sum(E,3))) * settings.scale);
+                % set volume [um]
+                n.setVolume(size(find(E~=0),1) * settings.scale^3);
+                
+                % add nucleus
+                obj.nuclei(i) = n;
+            end
+        end
+
+
+
+
+
+
+
+
+% --- MAIN.M LEGACY (START) ---
+close all; clear all; clc;
+
+addpath('lib');
+addpath('nuclei_detector');
+addpath('structure');
+addpath('expression');
+
+% Load settings
+settings = Settings.getInstance;
+
+% Define a list of root directories
+experimentRootDirectories = {'20100716_pmadAB_brkAB_wg-ptcAB_78-79H/'
+                             '20100716_pmadAB_brkAB_wg-ptcAB_90,5-91,5H/'
+                             '20100716_pmadAB_brkAB_wg-ptcAB_99-100H/'
+                             '20100716_pmadAB_brkAB_wg-ptcAB_110,5-111,5H/'
+                             '20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_78-79H/'
+                             '20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_90-91H/'
+                             '20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_99-100H/'
+                             '20100714_pent2-5-_pmadAB_brkAB_wg-ptcAB_110,5-111,5H/'}; 
+                              
+experimentRootDirectories = strcat('/home/tschaffter/devel/java/WingJ/benchmarks/wingj_50-wing_benchmark_10-11-11/',experimentRootDirectories);
+
+%% ------------------------------------------------------------------------
+% LOAD EXPERIMENTS
+repository = ExperimentList(experimentRootDirectories);
+
+% Prepare batches of experiments to ease the analyses
+% Sort by wt and pent2-5 mutant experiments
+wt = repository.getWildTypeExperiments();
+pent = repository.getExperimentsByMutantName('pent2-5');
+% Sort age
+wt78H = wt.getExperimentsByExperimentName('pmadAB_brkAB_wg-ptcAB_78-79H'); wt78H.displayNumExperiments();
+wt90H = wt.getExperimentsByExperimentName('pmadAB_brkAB_wg-ptcAB_90,5-91,5H'); wt90H.displayNumExperiments();
+wt99H = wt.getExperimentsByExperimentName('pmadAB_brkAB_wg-ptcAB_99-100H'); wt99H.displayNumExperiments();
+wt110H = wt.getExperimentsByExperimentName('pmadAB_brkAB_wg-ptcAB_110,5-111,5H'); wt110H.displayNumExperiments();
+pent78H = pent.getExperimentsByExperimentName('pmadAB_brkAB_wg-ptcAB_78-79H'); pent78H.displayNumExperiments();
+pent90H = pent.getExperimentsByExperimentName('pmadAB_brkAB_wg-ptcAB_90-91H'); pent90H.displayNumExperiments();
+pent99H = pent.getExperimentsByExperimentName('pmadAB_brkAB_wg-ptcAB_99-100H'); pent99H.displayNumExperiments();
+pent110H = pent.getExperimentsByExperimentName('pmadAB_brkAB_wg-ptcAB_110,5-111,5H'); pent110H.displayNumExperiments();
+
+%% ------------------------------------------------------------------------
+% STRUCTURE ANALYSIS
+% Compare the length of the wt D/V and A/P boundaries for different wing
+% ages.
+propertyNames = {'DV.length','AP.length'};
+additionalBatches = {wt90H.get(:),wt99H.get(:),wt110H.get(:)};
+boxplotOptions = [];
+% One group per experiment age
+% subplotStrategy = Experiment.SUBPLOT_PER_EXPERIMENT_BATCH;
+% boxplotNames = []; subplotNames = {'wt78H','wt90H','wt99H','wt110H'};
+% One group per property
+subplotStrategy = Experiment.SUBPLOT_PER_PROPERTY;
+boxplotNames = {'wt78H','wt90H','wt99H','wt110H'}; subplotNames = [];
+[X G numGroups H P sh] = wt78H.get(:).boxplotStructureProperty(propertyNames,additionalBatches,subplotStrategy,boxplotNames,subplotNames,boxplotOptions);
+
+% Compare the area of the four compartments for different wing
+% ages.
+propertyNames = {'da.area','dp.area','va.area','vp.area'};
+subplotStrategy = Experiment.SUBPLOT_PER_PROPERTY;
+boxplotNames = {'wt78H','wt90H','wt99H','wt110H'}; subplotNames = [];
+wt78H.get(:).boxplotStructureProperty(propertyNames,additionalBatches,subplotStrategy,boxplotNames,subplotNames,boxplotOptions);
+
+
+% Compare the length of the wt and pent2-5-mutant D/V boundary for
+% different wing ages.
+% propertyNames = {'DV.length'};
+% additionalBatches = {pent78H.get(:),wt90H.get(:),pent90H.get(:),wt99H.get(:),pent99H.get(:),wt110H.get(:),pent110H.get(:)};
+% subplotStrategy = Experiment.SUBPLOT_PER_EXPERIMENT_BATCH;
+% boxplotNames = []; subplotNames = {'wt78H','pent78H','wt90H','pent90H','wt99H','pent99H','wt110H','pent110H'};
+% wt78H.get(:).boxplotStructureProperty(propertyNames,additionalBatches,subplotStrategy,boxplotNames,subplotNames,boxplotOptions);
+
+
+
+
+
+
+
+% % wt78H = repository.getExperimentsByExperimentName('pmadAB_brkAB_wg-ptcAB_78-79H');
+% % plop = repository.getExperimentsByMutantName('pent2-5');
+% % plop = repository.getExperimentsByMutantName([]);
+% plop = repository.getWildTypeExperiments();
+% % plop = repository.getExperimentsByAge([78 79]);
+% plop.getNumExperiments()
+
+
+
+% EXAMPLE 1
+% Analyze structure properties
+% e1 = repository.get(1);
+% e2 = repository.get(1:2);
+% e3 = repository.get(1);
+% % Boxplots with one subplot per group of experiments
+% propertyNames = {'da.area','dp.area','va.area','vp.area'};
+% additionalBatches = {e2,e3};
+% % subplotStrategy = Experiment.SUBPLOT_PER_EXPERIMENT_BATCH;
+% % boxplotNames = {'da','dp','va','vp'};
+% % subplotNames = {'e1','e2','e3'};
+% subplotStrategy = Experiment.SUBPLOT_PER_PROPERTY;
+% boxplotNames = [];%{'e1','e2','e3'};
+% subplotNames = [];%{'da','dp','va','vp'};
+% boxplotOptions = [];
+% e1.boxplotStructureProperty(propertyNames,additionalBatches,subplotStrategy,boxplotNames,subplotNames,boxplotOptions);
+
+
+
+% EXAMPLE 2
+% Plot a selection of 1D expression profiles
+% e = repository.get(1:2);
+% e.plotExpressionProfiles('dadGFP','D/V',[0,0]);
+% e.plotExpressionProfiles('dadGFP','D/V',[]);
+
+% EXAMPLE 3
+% Show a selection of 2D expression maps
+% e = repository.get(1:2);
+% e.showMeanExpressionMap('dadGFP',[]);
+% e.showStdExpressionMap('dadGFP',[]);
+
+
+% EXAMPLE 4
+% Nuclei detection
+% e = repository.get(1:2);
+% e.detectNuclei('TOPRO');
+% e.showStructurePreview();
+
+
+
+
+% dates = {'20091202', '20091205'};
+% experiments.getExperimentsByDate(dates)
+
+% e.detectNuclei('TOPRO');
+
+% datasets1D = ExpressionDataset1DList('/home/tschaffter/ATEST/20091202_wg-ptcAB_dadGFP_TOPRO_114-115H_26deg_1/WingJ/');
+% ED1DList.getDatasetNames()
+
+% % show how many experiments where found
+% str = sprintf('%d experiments found in %s.',length(experimentDirectories),rootDirectory);
+% disp(str);
+% --- MAIN.M LEGACY (END) ---
+
+
+
+
+
+% --- MAIN_STRUCTURE.M (START) ---
+
+
+
+
+% % % WILD TYPE AND AGE
+% % % Compare the length of the wt D/V and A/P boundaries for different wing
+% % % ages.
+% % propertyNames = {'DV.length','AP.length'};
+% % additionalBatches = {wt90H.get(:),wt99H.get(:),wt110H.get(:)};
+% % boxplotOptions = [];
+% % % One group per experiment age
+% % % subplotStrategy = Experiment.SUBPLOT_PER_EXPERIMENT_BATCH;
+% % % boxplotNames = []; subplotNames = {'wt78H','wt90H','wt99H','wt110H'};
+% % % One group per property
+% % subplotStrategy = Experiment.SUBPLOT_PER_PROPERTY;
+% % boxplotNames = {'wt_78H','wt_90H','wt_99H','wt_110H'}; subplotNames = [];
+% % [X G numGroups H P sh] = wt78H.get(:).boxplotStructureProperty(propertyNames,additionalBatches,subplotStrategy,boxplotNames,subplotNames,boxplotOptions);
+% % % xlabel('Experiment');
+% % % ylabel('Boundary length (um)');
+% % 
+% % % Compare the area of the four compartments for different wing
+% % % ages.
+% % propertyNames = {'da.area','dp.area','va.area','vp.area'};
+% % subplotStrategy = Experiment.SUBPLOT_PER_PROPERTY;
+% % boxplotNames = {'wt_78H','wt_90H','wt_99H','wt_110H'}; subplotNames = [];
+% % wt78H.get(:).boxplotStructureProperty(propertyNames,additionalBatches,subplotStrategy,boxplotNames,subplotNames,boxplotOptions);
+% % % xlabel('Experiment');
+% % % ylabel('Compartment area (um^2)');
+% % 
+% % % Compare the area of the dorsal and ventral compartments for different
+% % % wing ages (note the usage of the '+' operator like in 'da.area+dp.area').
+% % propertyNames = {'da.area+dp.area','va.area+vp.area'};
+% % subplotStrategy = Experiment.SUBPLOT_PER_PROPERTY;
+% % boxplotNames = {'wt_78H','wt_90H','wt_99H','wt_110H'}; subplotNames = [];
+% % wt78H.get(:).boxplotStructureProperty(propertyNames,additionalBatches,subplotStrategy,boxplotNames,subplotNames,boxplotOptions);
+% % % xlabel('Experiment');
+% % % ylabel('Compartment area (um^2)');
+% % 
+% % % Compare the wing pouch area for different wing ages (wt and pent2-5).
+% % propertyNames = {'pouch.area'};
+% % additionalBatches = {wt90H.get(:),wt99H.get(:),wt110H.get(:)};
+% % subplotStrategy = Experiment.SUBPLOT_PER_PROPERTY;
+% % boxplotNames = {'wt_78H','wt_90H','wt_99H','wt_110H'}; subplotNames = [];
+% % wt78H.get(:).boxplotStructureProperty(propertyNames,additionalBatches,subplotStrategy,boxplotNames,subplotNames,boxplotOptions);
+% 
+% 
+% 
+% 
+% 
+% % Get more information about experiments.
+% % wt110H.displayExperimentNames();
+% % wt110H.get(:).getStructureProperty('da.area+dp.area')
+% % wt110H.get([3 7]).showStructurePreview();
+% 
+% 
+% % % WILD TYPE AND PENT MUTANT
+% % % Compare the length of the wt and pent2-5-mutant D/V and A/P boundary for
+% % % different wing ages.
+% % propertyNames = {'DV.length','AP.length'};
+% additionalBatches = {pent78H.get(:),wt90H.get(:),pent90H.get(:),wt99H.get(:),pent99H.get(:),wt110H.get(:),pent110H.get(:)};
+% subplotStrategy = Experiment.SUBPLOT_PER_EXPERIMENT_BATCH;
+% boxplotNames = []; subplotNames = {'wt78H','pent78H','wt90H','pent90H','wt99H','pent99H','wt110H','pent110H'};
+% boxplotOptions = [];
+% % wt78H.get(:).boxplotStructureProperty(propertyNames,additionalBatches,subplotStrategy,boxplotNames,subplotNames,boxplotOptions);
+% 
+% % % Compare the area of the four compartments for different wing
+% % % ages (wt and pent2-5).
+% % propertyNames = {'da.area','dp.area','va.area','vp.area'};
+% % wt78H.get(:).boxplotStructureProperty(propertyNames,additionalBatches,subplotStrategy,boxplotNames,subplotNames,boxplotOptions);
+% 
+% % Compare the wing pouch area for different wing ages (wt and pent2-5).
+% propertyNames = {'pouch.area'};
+% subplotStrategy = Experiment.SUBPLOT_PER_PROPERTY;
+% boxplotNames = {'wt78H','pent78H','wt90H','pent90H','wt99H','pent99H','wt110H','pent110H'}; subplotNames = [];
+% wt78H.get(:).boxplotStructureProperty(propertyNames,additionalBatches,subplotStrategy,boxplotNames,subplotNames,boxplotOptions);
+% 
+% 
+% % Compare the area of the dorsal and ventral compartments for different
+% % wing ages (wt and pent2-5) (note the usage of the '+' operator like in 'da.area+dp.area').
+% % propertyNames = {'da.area+dp.area','va.area+vp.area'};
+% % wt78H.get(:).boxplotStructureProperty(propertyNames,additionalBatches,subplotStrategy,boxplotNames,subplotNames,boxplotOptions);
+% 
+% --- MAIN_STRUCTURE.M (END) ---
+
+
+
+

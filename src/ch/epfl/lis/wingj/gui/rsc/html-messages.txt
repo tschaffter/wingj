@@ -1,0 +1,21 @@
+<center>Click on <b>Settings</b> to access<br>the advanced parameters of WingJ</center>
+<center>See the <b>Log window</b> for detailed<br>information about the running process</center>
+<center>Hold your mouse over an element of the <br>interface to see its description</center>
+<center>To open a single image, click on <b>Browse</b>,<br>select a folder and set "File name contains"</center>
+<center>Click on <b>Pre-Process</b> to help WingJ finding optimal<br>parameter values for generating structure models</center>
+<center>Click on <b>Run Detection</b> to automatically generate<br>a structure model for the selected system</center>
+<center>Click on <b>Structure</b> to visualize and<br>edit the current structure model</center>
+<center>Click on <b>Step</b> and <b>Redo Step</b> to progress step<br>by step in the generation of the structure model</center>
+<center>Click on <b>Manual</b> to generate<br>manually a structure model</center>
+<center>Click on <b>Set AOI</b> and draw<br>an area of interest (optional)</center>
+<center>Example images, user manual and <br>video tutorials are available on wingj.org</center>
+<center>Click on <b>Reset</b> to reset WingJ<br>and close all windows opened</center>
+<center>WingJ opens at startup the settings file <br> <i>USER_HOME</i>/WingJ/settings.txt (if it exists)</center>
+<center>See WingJ User Manual for information about file<br>naming conventions and directory structure used in WingJ</center>
+<center>Use the filenames proposed by WingJ to ensure<br>compatibility with the WingJ Matlab Toolbox</center>
+<center>The WingJ Matlab Toolbox provides scripts<br>to automate the generation of statistical analyses</center>
+<center>Avoid closing image windows manually,<br>instead let WingJ closes them when required</center>
+<center>Please contact us with bug reports, feature<br>requests, and information on related projects</center>
+<center>Click on <b>Mean</b> or <b>Max</b> to see<br>the projection of the selected image stack</center>
+<center>You can specify the min and max slice<br>indexes for each image stack loaded</center>
+<center>Install 64-bit Java to use WingJ 2 GB and 4 GB,<br>which allows WingJ to use more memory</center>

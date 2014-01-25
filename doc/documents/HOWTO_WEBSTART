@@ -1,0 +1,73 @@
+WingJ - Integration to ImageJ for Java Web Start
+================================================
+
+Thomas Schaffter (firstname.name@gmail.com)
+June 21, 2011
+
+1. Download IJ source code and import it as a new project in Eclipse
+2. Add the folder lib containing the libraries required by WingJ
+   - tools.jar
+   - big.jar
+   - commons-lang-2.6.jar
+   - commons-math-2.2.jar
+   - Jama-1.0.2.jar
+   - jcommon-1.0.16.jar
+   - jfreechart-1.0.13.jar
+   - wingj_.jar
+
+3. Edit IJ_Props.txt
+   - add: plug-in06=-
+   - add: plug-in07="WingJ",wingj.WJPlugIn
+
+4. Edit ij.ImageJ
+   - add in public static void main(String args[]):
+    // ============================================================================
+    // START WINGJ AT STARTUP
+    // TODO
+    IJ.log("Welcome to WingJ");
+    WJPlugIn wingj = new WJPlugIn();
+    wingj.run(null);
+    wingj.showAbout();
+    // ============================================================================
+
+5. Export IJ jar file
+
+Notes:
+   - WingJ jar file must be end with _.jar otherwise it is not recognized as a plugin by IJ when placed in the IJ folder plugin
+   - IJ jar with Web Start does take into account the content of IJ_Props.txt
+
+lispc4:
+   $ export PATH=/usr/java/jdk1.6.0_26/bin:/usr/lib64/mpi/gcc/openmpi/bin:/home/tschaffter/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/X11R6/bin:/usr/games:/usr/lib/mit/bin:/usr/lib/mit/sbin:/usr/NX/bin
+   WARNING: Place the java path in first position
+   WARNING: Do not forgot the "bin"
+
+   $ echo $JAVA_HOME
+   /usr/lib64/jvm/java
+   $ export JAVA_HOME=/usr/java/jdk1.6.0_26/
+
+  From what I read, using 64-bit app on 64-bit VM instead of 32-bit app allows to improve performance by about 5%
+
+
+Add automatically shortcut to desktop
+-------------------------------------
+
+Include the library /usr/java/jdk1.6.0_26/sample/jnlp/servlet/jnlp.jar
+
+IntegrationService is = null;
+try {
+    is = (IntegrationService) ServiceManager.lookup("javax.jnlp.IntegrationService");
+	// creates a desktop and system menu shortcut; returns true if the shortcuts 
+	// were created successfully
+    if (!(is.hasDesktopShortcut() || is.hasMenuShortcut())) {
+	boolean result = is.requestShortcut(true, true, "WingJ");
+	if (result) IJ.log("Shortcut to WingJ added to the desktop");
+    }
+} catch(UnavailableServiceException use){
+    //
+}
+
+//removes all shortcuts for application
+//		result = is.removeShortcuts();
+
+// checks to see if there are shortcuts for the application
+//		result = is.hasMenuShortcut() && is.hasDesktopShortcut());

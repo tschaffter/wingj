@@ -1,0 +1,85 @@
+#########################################################################
+# Configuration file for WingJ
+# wingj.sourceforge.net
+#########################################################################
+
+# All variables that are loaded by WJSettings must be specified in this file, otherwise
+# an Exception will be thrown and a warning message displayed.
+#
+# Boolean values: 0 => false, 1 => true
+
+#========================================================================
+# INPUT AND OUTPUT
+
+# Working directory
+workingDirectory = "/mnt/extra/images/20091202_wg-ptcAB_dadGFP_TOPRO_114-115H_26deg_1"
+# Output directory
+outputDirectory = "/home/tschaffter"
+
+#========================================================================
+# FLUORESCENT CONFOCAL IMAGES
+
+# Wing name
+wingName = "wing_name"
+# Wing age
+wingAge = "wing_age"
+# Path to the channel containing the wing pouch structure (ch01)
+ch01Directory = "/mnt/extra/images/20091202_wg-ptcAB_dadGFP_TOPRO_114-115H_26deg_1/ch01"
+# Path to the channel containing the protein gradient to measure (ch02)
+ch02Directory = "/mnt/extra/images/20091202_wg-ptcAB_dadGFP_TOPRO_114-115H_26deg_1/ch02"
+# Path to the optional channel (ch03)
+ch03Directory = "/mnt/extra/images/20091202_wg-ptcAB_dadGFP_TOPRO_114-115H_26deg_1"
+# Scale [um/px]
+scale = 0.25
+
+#========================================================================
+# PRE-PROCESSING
+
+# Blur
+ppBlur = 10
+# Threshold
+ppThreshold = 75
+
+#========================================================================
+# SNAKES
+
+# Blur
+snakeBlur = 30
+# Radius
+snakeRadius = 40
+# Lambda
+snakeLambda = 0.85
+# Rate
+snakeRate = 50
+# Number of nodes
+snakeNumNodes = 10
+# Number of nodes per spline for final snake
+finalSnakeNumNodes = 3
+# Manual detection: radius of the circle used as default wing pouch shape (fraction of min(image width, image height) [0.1,0.4])
+genericShapeRadius = 0.3
+
+#========================================================================
+# GENE EXPRESSION
+
+# Sigma of the 1D Gaussian filter
+expSigma = 10.0
+# Shift in [um] defining from how far from the reference boundary we are measuring expression
+expShift = 0.0
+# 0 = D/V boundary, 1 = A/P boundary
+expBoundary = 0
+
+#========================================================================
+# MISC PARAMETERS
+
+# If 1, load automatically the images after loading the settings file
+ch01AutoLoading = 1
+# If 1, load automatically the images after loading the settings file
+ch02AutoLoading = 1
+# If 1, load automatically the images after loading the settings file
+ch03AutoLoading = 0
+# Default color used to draw polygons, rois, etc.
+defaultColor = "00ffff"
+# ROI stroke width of the detected wing pouch structure
+roiStrokeWidth = 1.5
+# Overlay font size coefficient for the wing pouch structure
+structureOverlayFontSizeCoeff = 40.0
