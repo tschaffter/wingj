@@ -22,7 +22,7 @@ The standalone binary *wingj.jar* includes ImageJ and WingJ. It can be run using
 $ java -jar wingj.jar
 ```
 
-Please refer to the README of the project [ImageJ for WingJ](http://84.75.29.70/wingj/imagej/master).
+Please refer to the README of the project [ImageJ for WingJ](http://84.75.29.70/wingj/imagej/tree/master).
 
 ## Export WingJ as an independent plugin for ImageJ
 

@@ -128,6 +128,8 @@ public class WJAboutBox extends JDialog {
 		infoPanel.add(Box.createRigidArea(new Dimension(0,10)), gca);
 		
 		// title
+//		Towards unsupervised and systematic segmentation of biological organisms
+//		Unsupervised and systematic segmentation of <i>Drosophila</i> wing pouch and embryo
 		JLabel title = new JLabel("<html><b>Towards unsupervised and systematic segmentation of biological organisms</b></html>");
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.anchor = GridBagConstraints.NORTH;
