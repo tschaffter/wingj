@@ -1,0 +1,13 @@
+
+ch.epfl.lis.wingj
+ch.epfl.lis.wingj.batch
+ch.epfl.lis.wingj.expression
+ch.epfl.lis.wingj.filefilters
+ch.epfl.lis.wingj.gui
+ch.epfl.lis.wingj.structure
+ch.epfl.lis.wingj.structure.drosophila.embryo
+ch.epfl.lis.wingj.structure.drosophila.wingpouch
+ch.epfl.lis.wingj.structure.geometry
+ch.epfl.lis.wingj.structure.tools
+ch.epfl.lis.wingj.test
+ch.epfl.lis.wingj.utilities
