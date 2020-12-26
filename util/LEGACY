@@ -1,0 +1,1338 @@
+//
+// WingJ.java
+//
+
+	// ----------------------------------------------------------------------------
+
+//	/**
+//	 * Method that call each of the blocks of the pipeline
+//	 * @param blockToProcess Part of the pipeline where we are
+//	 * @param stepByStep If the step by step mode is activated
+//	 */
+//	public void run (int blockToProcess, boolean stepByStep) {
+//
+//		// Init the ROImanager if there is any created
+//		roiManager_ = RoiManager.getInstance();
+//		if(roiManager_ == null)
+//			roiManager_ = new RoiManager();
+//
+//		switch (blockToProcess) {
+//			case 0:
+//				progressBar_.setValue(0);
+//				WJSettings.log("=======================================");
+//				WJSettings.log("STEP 1: PREPROCESSING");
+//				WJSettings.log("=======================================");
+//
+//				//Thresholding
+//				//Obtain the maximum projection of the first stack
+////				maximumProjectionPlusCH1 = maxIntensityProjection(structureStack_, false);
+//				//TODO
+//			try {
+//				maximumProjectionPlusCH1 = Projection.maximumIntensityProjection(structureStack_);
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//
+//				openImages.addElement(maximumProjectionPlusCH1);
+//				maximumProjectionProcess = maximumProjectionPlusCH1.getProcessor();
+//				maximumProjectionPlusCH1.show();
+//				progressBar_.setValue(33);
+//				//Obtain the maximum projection of the second stack
+////				maximumProjectionPlusCH2 = maxIntensityProjection(expressionStack_, true);
+//			try {
+//				maximumProjectionPlusCH2 = Projection.maximumIntensityProjection(expressionStack_); // max projection and crop will be done later in the reader
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//				openImages.addElement(maximumProjectionPlusCH2);
+//				maximumProjectionPlusCH2.show();
+//				progressBar_.setValue(67);
+//				//Preprocessing of the image in order to obtain a much simpler version
+//				prePro = preProcess(stepByStep);
+//				progressBar_.setValue(100);
+//				stage_++;
+//				WJSettings.log("STEP 1: FINISHED");
+//				if(stepByStep){
+////					redoStepButton_.setEnabled(true);
+////					runButton_.setEnabled(true);
+////					stepButton_.setEnabled(true);
+//				} else{
+//					run(stage_,false);
+//				}
+//
+//				break;
+//			case 1:
+//				progressBar_.setValue(0);
+//				WJSettings.log("=======================================");
+//				WJSettings.log("STEP 2: MORPHOLOGICAL PROCESSING");
+//				WJSettings.log("=======================================");
+//
+//				//Morphology
+//				cleanSkeletor = morphology(prePro);
+//				ImagePlus cleanSkel = new ImagePlus("Prunned skeleton - CH1", cleanSkeletor);
+//				openImages.addElement(cleanSkel);
+//				cleanSkel.show();
+//				stage_++;
+//				progressBar_.setValue(100);
+//				WJSettings.log("STEP 2: FINISHED");
+//				run(stage_,stepByStep);
+//				break;
+//			case 2:
+//				progressBar_.setValue(0);
+//				WJSettings.log("=======================================");
+//				WJSettings.log("STEP 3: DETECTION");
+//				WJSettings.log("=======================================");
+//
+//				//We estimate the center of the image
+//				center = computeCenter();
+//				progressBar_.setValue(50);
+//				//Recomputing the center
+//				center[1] = finalCenter();
+//				progressBar_.setValue(100);
+//
+//				//Once we have the center we can launch the kite snake
+//				//First we define its parameters
+//				WJSettings.log("Launching Kite-Snake...");
+//				int blur = ppBlurModel_.getNumber().intValue();
+//				//Force iterations until convergence
+//				int life=-1;
+//				//Later we launch the snake in the correct image
+//				int securityWidthSnake = 2 * blur;
+//				FloatProcessor max =(FloatProcessor)skeleBlur.convertToFloat();
+//				progressBar_.setIndeterminate(true);
+//				//mysnake = new KiteSnake (securityWidthSnake, max, life, center[2],center[3]);
+//				Snake2DKeeper keeper = new Snake2DKeeper();
+//				ImagePlus pluss = new ImagePlus("Thick Skeleton - CH1", max);
+//				openImages.addElement(pluss);
+//				pluss.show();
+//				if(stepByStep){
+//					pluss.setActivated();
+//					keeper.optimize(mysnake, pluss);
+//					keeper.interactAndOptimize(mysnake,pluss);
+//				}else{
+//					keeper.optimize(mysnake, null);
+//				}
+//				stage_++;
+//				WJSettings.log("STEP 3: FINISHED");
+//				progressBar_.setIndeterminate(false);
+//				progressBar_.setValue(100);
+//				run(stage_,stepByStep);
+//				break;
+//			case 3:
+//				progressBar_.setValue(0);
+//				WJSettings.log("=======================================");
+//				WJSettings.log("STEP 4: PRIOR-SHAPE SNAKES");
+//				WJSettings.log("=======================================");
+//
+//				//Now we create the seeds for the prior-shape snake
+//				WJSettings.log("Computing centroids...");
+//				//double baris [][] = mysnake.computeBariCenters();
+//				progressBar_.setValue(33);
+//				//Launch of the prior shape snake in order to detect the regions
+//				FloatProcessor maxim =(FloatProcessor)skeleBlur.convertToFloat();
+//				WJSettings.log("Detecting compartments...");
+//				progressBar_.setIndeterminate(true);
+//				//ShapeRoi totalRoi = detectCompartments(baris,maxim,stepByStep);
+//				ShapeRoi totalRoi = null;
+//				progressBar_.setIndeterminate(false);
+//				progressBar_.setValue(67);
+//				if(totalRoi==null){
+//					return;
+//				}
+//				progressBar_.setValue(100);
+//				WJSettings.log("STEP 4: FINISHED");
+//				//Detection of the exterior border
+//				WJSettings.log("=======================================");
+//				WJSettings.log("STEP 5: EXTERNAL BORDER DETECTION");
+//				WJSettings.log("=======================================");
+//
+//				progressBar_.setValue(0);
+//				progressBar_.setIndeterminate(true);
+//				exteriorBoundaries(totalRoi);
+//				progressBar_.setIndeterminate(false);
+//				progressBar_.setValue(100);
+//				WJSettings.log("STEP 5: FINISHED");
+//				if(stepByStep== false){
+//					stage_++;
+//					run(stage_,stepByStep);
+//				}else{
+//					detectionStepButton_.setEnabled(true);
+//				}
+//				break;
+//			case 4:
+//				WJSettings.log("=======================================");
+//				WJSettings.log("STEP 6: INTERNAL BORDER DETECTION");
+//				WJSettings.log("=======================================");
+//
+//				progressBar_.setValue(0);
+//				progressBar_.setIndeterminate(true);
+//				Roi[] arrayRoi=roiManager_.getRoisAsArray();
+//				interiorBoundaries((ShapeRoi)arrayRoi[0],(ShapeRoi)arrayRoi[1],(ShapeRoi)arrayRoi[2],(ShapeRoi)arrayRoi[3]);
+//				progressBar_.setIndeterminate(false);
+//				progressBar_.setValue(100);
+//				WJSettings.log("STEP 6: FINISHED");
+//
+//				//Detection of the interior lines
+//
+//				WJSettings.log("=======================================");
+//				WJSettings.log("STEP 7: CROSS DETECTION");
+//				WJSettings.log("=======================================");
+//
+//				progressBar_.setValue(0);
+//				progressBar_.setIndeterminate(true);
+//				arrayRoi = roiManager_.getRoisAsArray();
+//				outlineCross(arrayRoi[arrayRoi.length-1]);
+//
+//
+//				progressBar_.setIndeterminate(false);
+//				progressBar_.setValue(100);
+//				stage_++;
+//				WJSettings.log("STEP 7: FINISHED");
+//				run(stage_,stepByStep);
+//				break;
+//			case 5:
+//				WJSettings.log("=======================================");
+//				WJSettings.log("STEP 8: FINAL REFINEMENT");
+//				WJSettings.log("=======================================");
+//
+//				maximumProjectionPlusCH1.setActivated();
+//				WingSnake wingSnake = new WingSnake(center[2], center[3], extractedShapes);
+//				Snake2DKeeper wingKeeper = new Snake2DKeeper();
+//				wingKeeper.interact(wingSnake, maximumProjectionPlusCH1);
+//				axis1_ = wingSnake.getBoundary(0);
+//				axis2_ = wingSnake.getBoundary(1);
+//
+//				compartments_ = new ArrayList<Compartment>();
+//				for(int i=0; i<4; i++){
+//					compartments_.add(new Compartment(""+i, extractedShapes.getCompartment(i)));
+//				}
+//
+//				WJSettings.log("STEP 8: FINISHED");
+//				WJSettings.log("=======================================");
+//				WJSettings.log("EXECUTION FINISHED");
+//				WJSettings.log("=======================================");
+//				displayResults();
+//				break;
+//			default :
+//				IJ.error("error");
+//				break;
+//		}
+//	}
+
+   	/**
+   	 * We do an estimation of the image center
+   	 */
+   	private int[] computeCenter() {
+   		WJSettings.log("Computing center...");
+   		int blur = ppBlurModel_.getNumber().intValue();
+   		//Gaussian filter in order to grow the pruned skeleton
+   		GaussianBlur gaussianBlur = new GaussianBlur();
+   		double accuracy = 0.001;
+   		//We keep the same blurring and we apply it to the skeleton
+   		double stdX = (double)blur/Math.sqrt(2.0);
+   		ImageProcessor workingProcessor = cleanSkeletor.duplicate();
+   		gaussianBlur.blurGaussian(workingProcessor, stdX, stdX, accuracy);
+   		//we maximize the blurred values. We have done a dilation of the image
+   		this.skeleBlur = this.filtMax(workingProcessor);
+   		//Compute the center over this image
+   		FloatProcessor max =(FloatProcessor)skeleBlur.convertToFloat();
+   		WJLook4Center center = new WJLook4Center(max,this.cleanSkeletor);
+   		int [] result = new int[4];
+   		//Storing the estimation
+   		result[0]= center.getX();
+   		result[1]= center.getY();
+   		result[2]= center.getXGrow();
+   		result[3]= center.getYGrow();
+   		return result;
+   	}
+
+   		private int finalCenter(){
+   		WJSettings.log("Refining center...");
+   		int downApproach = finalCenterDown();
+   		int upApproach = finalCenterUp();
+   		if(downApproach==-1){
+   			return upApproach;
+   		}else if(upApproach==-1){
+   			return downApproach;
+   		}else{
+   			//minimal euclidian distance
+   			double eu1 = Math.sqrt(Math.pow(center[3]-downApproach, 2));
+   			double eu2 = Math.sqrt(Math.pow(center[3]-upApproach, 2));
+   			if(eu1>eu2){
+   				return upApproach;
+   			}else{
+   				return downApproach;
+   			}
+   		}
+
+   	}
+
+
+
+   		private int finalCenterDown(){
+   		int yCoor= center[1];
+   		int xCoor = center[0];
+   		boolean continueLooking= true;
+   		int downVisit=0;
+   		int downLimit = cleanSkeletor.getHeight();
+   		while(continueLooking){
+   		//Inside the image
+   			if((yCoor+downVisit)<=downLimit){
+   				if(cleanSkeletor.getPixel(xCoor, yCoor+downVisit)!=0){
+   					return yCoor+downVisit;
+   				}else{
+   					downVisit++;
+   				}
+   			}else{
+   				//Out image
+   				return -1;
+   			}
+   		}
+   		return -1;
+   	}
+
+
+
+   		private int finalCenterUp(){
+   		boolean continueLooking= true;
+   		int yCoor= center[1];
+   		int xCoor = center[0];
+   		int upVisit=0;
+   		int upLimit=0;
+   		while(continueLooking){
+   			if((yCoor-upVisit)>=upLimit){
+   				if(cleanSkeletor.getPixel(xCoor, yCoor-upVisit)!=0){
+   					return yCoor-upVisit;
+   				}else{
+   					upVisit++;
+   				}
+   			}else{
+   				//Out image
+   				return -1;
+   			}
+   		}
+   		return -1;
+   	}
+
+
+   		private int[] centerInAxis(Vector<Point2D.Double> pol1,Vector<Point2D.Double> pol2,Vector<Point2D.Double> pol3,Vector<Point2D.Double> pol4){
+   		//Init return array
+   		int[] posPolCenter = new int[2];
+   		//Init flag
+   		boolean notEnd=true;
+   		boolean end1=false;
+   		boolean end2=false;
+   		boolean end3=false;
+   		boolean end4=false;
+   		int i=0;
+   		//Look for the center
+   		while(notEnd){
+   			if(i< (pol1.size()-1)){
+   				if(pol1.elementAt(i).x==center[0] && pol1.elementAt(i).y==center[1]){
+   					posPolCenter[0]=0;
+   					posPolCenter[1]=i;
+   					return posPolCenter;
+   				}
+   			}else{
+   				end1=true;
+   			}
+   			if(i< (pol2.size()-1)){
+   				if(pol2.elementAt(i).x==center[0] && pol2.elementAt(i).y==center[1]){
+   					posPolCenter[0]=1;
+   					posPolCenter[1]=i;
+   					return posPolCenter;
+   				}
+   			}else{
+   				end2=true;
+   			}
+   			if(i< (pol3.size()-1)){
+   				if(pol3.elementAt(i).x==center[0] && pol3.elementAt(i).y==center[1]){
+   					posPolCenter[0]=2;
+   					posPolCenter[1]=i;
+   					return posPolCenter;
+   				}
+   			}else{
+   				end3=true;
+   			}
+   			if(i< (pol4.size()-1)){
+   				if(pol4.elementAt(i).x==center[0] && pol4.elementAt(i).y==center[1]){
+   					posPolCenter[0]=3;
+   					posPolCenter[1]=i;
+   					return posPolCenter;
+   				}
+   			}else{
+   				end4=true;
+   			}
+   			i++;
+   			//Undesired finish of the loop
+   			if(end1==true && end2==true&& end3==true&&end4==true){
+   				notEnd=false;
+   			}
+   		}
+   		//Error
+   		posPolCenter[0]=-1;
+   		posPolCenter[1]=-1;
+   		return posPolCenter;
+   	}
+
+
+
+   	   	/**
+   	 * Method which maximize the blurred values in order to obtain the dilation of the image
+   	 * @param iProc Image we want to dilate
+   	 * @return Delated image
+   	 */
+   	private ImageProcessor filtMax(ImageProcessor iProc){
+   		double value = 0.0;
+   		for(int i=0; i<iProc.getWidth();i++){
+   			for(int j=0;j<iProc.getHeight();j++){
+   				value= iProc.getPixelValue(i, j);
+   				//Blurred points
+   				if(value!=0){
+   					//Maximize
+   					iProc.putPixelValue(i, j, 255);
+   				}
+   			}
+   		}
+   		return iProc;
+   	}
+
+
+   		/**
+   	 * Detection of the four compartments inside the wing pouch
+   	 * @param baris Coordinates of four points inside the each of the compartments
+   	 * @param data Image we want to process
+   	 * @param stepByStep If step by step is activated
+   	 * @return Detected regions
+   	 */
+   	private ShapeRoi detectCompartments(double baris [][], FloatProcessor data, boolean stepByStep) {
+   		Snake2DKeeper keeper = new Snake2DKeeper();
+   		ShapeRoi[] shapes	= new ShapeRoi[4];
+   		Snake2DScale[] skin = null;
+   		PolygonRoi polyroi = null;
+   		ShapeSnake myShapeSnake = null;
+
+   		//snake parameters
+   		double lambda = snakeLambdaModel_.getNumber().doubleValue();
+   		double std = snakeBlurModel_.getNumber().doubleValue();
+   		double radius = snakeRadiusModel_.getNumber().doubleValue();
+   		int numNodes = snakeNumNodesModel_.getNumber().intValue();
+   		int snakeSamplingStep = snakeRateModel_.getNumber().intValue();
+
+   		//We detect which of the regions is going to be A/P
+   		apRegion = detectVD(data,center);
+
+   		for(int i=0; i<4; i++){
+   	   		myShapeSnake = new ShapeSnake(data, numNodes, snakeSamplingStep, std, lambda, baris[i][0], baris[i][1], radius);
+   			if(stepByStep){
+   				maximumProjectionPlusCH1.getWindow().toFront();
+   				keeper.optimize(myShapeSnake,maximumProjectionPlusCH1);
+   				keeper.interactAndOptimize(myShapeSnake,maximumProjectionPlusCH1);
+   			}else{
+   				keeper.optimize(myShapeSnake, null);
+   			}
+   	   		skin = myShapeSnake.getScales();
+   	   		polyroi = new PolygonRoi(skin[1], Roi.POLYGON);
+   	   		shapes[i] = new ShapeRoi(polyroi);
+   	   		extractedShapes.setCompartment(i, polyroi.getPolygon());
+   	 	}
+
+   		//Labeling the regions with the ventral and dorsal label
+   		shapes[apRegion[0]].setName("Dorsal");
+   		shapes[apRegion[1]].setName("Ventral");
+
+   		for(int i=0; i<4; i++){
+   			roiManager_.addRoi(shapes[i]);
+   		}
+
+   		if(roiManager_.getRoisAsArray().length<4){
+   			this.reStart();
+   			IJ.error("Not possible to detect the four regions");
+   			return null;
+   		}
+   		//Combination of the four compartments
+   		ShapeRoi totalRoi=((shapes[0].or(shapes[1])).or(shapes[2])).or(shapes[3]);
+   		totalRoi.setName("4 Regions together");
+   		roiManager_.addRoi(totalRoi);
+   		return totalRoi;
+   	}
+   	/**
+   	 * Computation of the external border of the wing pouch
+   	 * @param totalRoi Combination of the four internal compartments
+   	 */
+   	private void exteriorBoundaries(ShapeRoi totalRoi){
+   		//Boundaries of the region
+   		java.awt.Rectangle rect = totalRoi.getBounds();
+   		//We create a processor with the mask well situated
+   		totalRegions = new ByteProcessor(skeleBlur.getWidth(),skeleBlur.getHeight());
+   		ImageProcessor mask = totalRoi.getMask();
+   		totalRegions.insert(mask, rect.x, rect.y);
+   		ImageProcessor regionsCorrectSize = totalRegions.duplicate();
+   		//We dilate the regions
+   		GaussianBlur gaussianBlur = new GaussianBlur();
+   		int blur =ppBlurModel_.getNumber().intValue();
+   		int pBlur = blur +20;
+   		gaussianBlur.blur(regionsCorrectSize, pBlur);
+   		this.filtMax(regionsCorrectSize);
+   		//Values for computing contour tracing
+   		byte[]  dataByte = (byte [])regionsCorrectSize.getPixels();
+   		int cp =0;
+   		//Creating an array with binary values
+   		boolean [] dataBoolean = new boolean[dataByte.length];
+   		for(int i =0; i<dataByte.length; i++){
+   			if(dataByte[i]!=0){
+   				dataBoolean[i] = true;
+   				cp++;
+   			}else{
+   				dataBoolean[i] = false;
+   			}
+   		}
+   		//The contour tracing method needs a boolean array as an input
+   		WJContourTracing contour = new WJContourTracing(dataBoolean,regionsCorrectSize.getWidth(), regionsCorrectSize.getHeight());
+   		contour.trace();
+   		//Obtaining border points
+   		int nPoints = contour.getNPoints();
+   		int [] xValue = new int[nPoints];
+   		int [] yValue = new int[nPoints];
+   		yValue=contour.getYCoordinates();
+   		xValue=contour.getXCoordinates();
+   		//Down sampling in order to avoid problems with the convex Hull
+   		int down = (nPoints/4)+1;
+   		int [] xValueDown = new int [down] ;
+   		int [] yValueDown = new int[down];
+   		int j=0;
+   		for(int i =0; i<nPoints; i= i+4){
+   			xValueDown[j] = xValue[i];
+   			yValueDown[j]= yValue[i];
+   			j++;
+   		}
+   		//Input for the convex HUll
+   		Vector<Point2D.Double> inputPoints 	= new Vector<Point2D.Double>(0);
+   		Point2D.Double point;
+   		for(int i=0; i<down; i++){
+   			point = new Point2D.Double(xValueDown[i], yValueDown[i]);
+   			inputPoints.addElement(point);
+   		}
+   		//Melkman Convex hull
+   		//WJMelkman complex = new WJMelkman(inputPoints);
+   		//Vector<Point2D.Double> complexOutput = complex.getOutputPoints();
+
+   		//PolygonRoi polyroi = buildPolygonRoi(complexOutput, "Exterior Boundary");
+   		//extractedShapes.setExterionBoundary(polyroi.getPolygon());
+   		//roiManager_.addRoi(polyroi);
+   	}
+
+   	/**
+   	 * Method used in order to notice where is the ventral part and where the dorsal
+   	 * @param image2Work Image we use for the computation
+   	 * @param center center of the image
+   	 * @return vector with a number that identify which of the compartments detected is ventral and which is dorsal
+   	 */
+   	private int[] detectVD(ImageProcessor image2Work, int[] center){
+   		//First we notice how much me need to rotate using the inertial axis
+   		double angle = computeImageMomentsAndOrientation();
+   		//Rotate clockwise
+   		image2Work.rotate(angle);
+   		//Now the image is well oriented, we can look into the axes where
+   		//is the maximum projection and identify the V/D
+   		int xPos = center[2];
+   		int yPos = center[3];
+   		//Definition of the regions
+   		int[] regions = new int[4];
+   		//Scanning the image looking for the maximum of all the sub parts
+   		for(int i=0;i<image2Work.getWidth();i++){
+   			for(int j=0;j<image2Work.getHeight();j++){
+   				if(i<xPos && j<yPos){
+   					regions[0]++;
+   				}
+   				if(i>xPos && j<yPos){
+   					regions[1]++;
+   				}
+   				if(i>xPos && j>yPos){
+   					regions[2]++;
+   				}
+   				if(i<xPos && j>yPos){
+   					regions[3]++;
+   				}
+   			}
+   		}
+   		int maximum=0;
+   		int desiredRegion=-1;
+   		//The region with the maximum is the desired one
+   		for(int i=0;i<regions.length;i++){
+   			if(regions[i]>maximum){
+   				maximum=regions[i];
+   				desiredRegion=i;
+   			}
+   		}
+   		int[] result= new int[2];
+   		result[0]= desiredRegion;
+   		//We also detect the ventral as the region in front
+   		if((desiredRegion+2)>3){
+   			result[1]=desiredRegion-2;
+   		}else{
+   			result[1]=desiredRegion+2;
+   		}
+   		return result;
+   	}
+
+
+
+   		/**
+   	 * Function used for computing the inertial matrix and the orientation
+   	 * @return Rotation angle
+   	 */
+   	private double computeImageMomentsAndOrientation(){
+   		//Raw Moments
+   		double M00 = this.computeRawMoments(0.0,0.0);
+   		double M01 = this.computeRawMoments(0.0,1.0);
+   		double M10 = this.computeRawMoments(1.0,0.0);
+   		double M11 = this.computeRawMoments(1.0,1.0);
+   		double M20 = this.computeRawMoments(2.0,0.0);
+   		double M02 = this.computeRawMoments(0.0,2.0);
+   		//Centroid
+   		double xCent = M10/M00;
+   		double yCent = M01/M00;
+
+   		wingDiscCentroid_ = new Point((int)Math.round(xCent), (int)Math.round(yCent));
+
+   		//Covariance matrix
+   		double[][] covMatrix= new double [2][2];
+   		covMatrix[0][0]=M20/M00 - Math.pow(xCent, 2.0);
+   		covMatrix[1][1]=M02/M00 - Math.pow(yCent, 2.0);
+   		covMatrix[0][1]=M11/M00 - xCent*yCent;
+   		covMatrix[1][0]=M11/M00 - xCent*yCent;
+   		double angle = 0.5 * Math.atan((2.0 * covMatrix[0][1])/(covMatrix[0][0] * covMatrix[1][1]));
+   		return angle;
+   	}
+
+   	/**
+   	 * Function that compute the raw moment of order (i,j)
+   	 * @param i X order
+   	 * @param j Y order
+   	 * @return Raw moment
+   	 */
+   	private double computeRawMoments(double i, double j){
+   		double result=0.0;
+   		//Going over the image
+   		for(int x=0; x<skeleBlur.getWidth();x++){
+   			for(int y=0; y<skeleBlur.getHeight(); y++){
+   				result = result + Math.pow(x, i) * Math.pow(y, j) * skeleBlur.getPixelValue(x, y);
+   			}
+   		}
+   		return result;
+   	}
+   	/**
+   	 * Compute the interior boundary of the wing pouch structure
+   	 * @param shapeRoi1 First compartment detected
+   	 * @param shapeRoi2 Second compartment detected
+   	 * @param shapeRoi3 Third compartment detected
+   	 * @param shapeRoi4 Fourth compartment detected
+   	 */
+   	private void interiorBoundaries(ShapeRoi shapeRoi1,ShapeRoi shapeRoi2,ShapeRoi shapeRoi3,ShapeRoi shapeRoi4){
+   		//Region growing from the center until all regions touch themselves
+   		int growing = 50;
+   		ImageProcessor experimental =totalRegions.duplicate();
+   		//Init regions
+   		boolean zon1 = false;
+   		boolean zon2 = false;
+   		boolean zon3 = false;
+   		boolean zon4 = false;
+   		boolean allZonesTouched = false;
+   		Polygon poly = new Polygon();
+   		while(allZonesTouched == false){
+   			//enough growing?
+   			for(int i=center[2]-growing;i < center[2]+growing; i++){
+   				for(int k=center[3]-growing;k < center[3]+growing; k++){
+   					if(shapeRoi1.contains(i, k)){
+   						zon1=true;
+   					}
+   					if(shapeRoi2.contains(i, k)){
+   						zon2=true;
+   					}
+   					if(shapeRoi3.contains(i, k)){
+   						zon3=true;
+   					}
+   					if(shapeRoi4.contains(i, k)){
+   						zon4=true;
+   					}
+   					if(i>0 && k>0 && i< experimental.getWidth() && k< experimental.getHeight()){
+   						experimental.putPixelValue(i, k, 255);
+   						if(!poly.contains(i, k)){
+   							poly.addPoint(i, k);
+   						}
+   					}
+   				}
+   			}
+   			if(zon1 && zon2 && zon3 && zon4){
+   				allZonesTouched = true;
+   			}else{
+   				growing = 2 * growing;
+   			}
+   		}
+   		Point2D.Double point;
+   		//Prepare data for computing convexHull
+   		Vector<Point2D.Double> inPoints	= new Vector<Point2D.Double>(0);
+   		byte[]  inData = (byte [])experimental.getPixels();
+   		for(int k=0; k<experimental.getWidth(); k++){
+   			for(int l=0; l<experimental.getHeight();l++){
+   				if(inData[k+l*experimental.getWidth()]!=0){
+   					point = new Point2D.Double(k, l);
+   					inPoints.addElement(point);
+   				}
+
+   			}
+   		}
+   		//ConvexHUll
+   		//WJMelkman computeConvexHull = new WJMelkman(inPoints);
+   		//Vector<Point2D.Double> hullOutput = computeConvexHull.getOutputPoints();
+
+   		//PolygonRoi polyroi = buildPolygonRoi(hullOutput, "Interior Boundary");
+   		//extractedShapes.setInteriorBoundary(polyroi.getPolygon());
+   		//roiManager_.addRoi(polyroi);
+   	}
+
+   	/**
+   	 * Buils a PolygonRoi out of a Vector of points
+   	 */
+   	private PolygonRoi buildPolygonRoi(Vector<Point2D.Double> polyline, String name){
+   		int[] xRegions = new int[polyline.size()];
+   		int[] yRegions = new int[polyline.size()];
+   		for(int i=0; i< polyline.size(); i++){
+   			xRegions[i]= (int)Math.round(polyline.elementAt(i).x);
+   			yRegions[i]= (int)Math.round(polyline.elementAt(i).y);
+   		}
+   		PolygonRoi polygonRoi = new PolygonRoi(xRegions, yRegions, xRegions.length, Roi.FREELINE) ;
+   		polygonRoi.setName(name);
+   		return polygonRoi;
+   	}
+
+   	/**
+   	 * Method that extracts the four axis that the wing pouch contains
+   	 */
+   	private void outlineCross(Roi boundingRegion) {
+   		WJSettings settings = WJSettings.getInstance();
+
+   		//Center, initial point to grow
+   		Point2D.Double myCenter = new Point2D.Double(center[2],center[3]);
+
+   		//Initial regions
+   		Vector<Point2D.Double> pol1 = new Vector<Point2D.Double>();
+   		Vector<Point2D.Double> pol2 = new Vector<Point2D.Double>();
+   		Vector<Point2D.Double> pol3 = new Vector<Point2D.Double>();
+   		Vector<Point2D.Double> pol4 = new Vector<Point2D.Double>();
+
+   		//Adding the central point to the first region
+   		pol1.add(myCenter);
+   		//Flags in order to stop growing until interior region
+   		boolean growGeneral = true;
+   		boolean growRegion1 = true;
+   		boolean growRegion2 = false;
+   		boolean growRegion3 = false;
+   		boolean growRegion4 = false;
+
+   		//Flags in order to stop growing due to external user decision
+   		boolean flagR1;
+   		boolean flagR2;
+   		boolean flagR3;
+   		boolean flagR4;
+   		if(settings.getGrowingBranches()){
+   			flagR1 = true;
+   	   		flagR2 = true;
+   	   		flagR3 = true;
+   	   		flagR4 = true;
+   		}else{
+   			flagR1 = false;
+  	   		flagR2 = false;
+  	   		flagR3 = false;
+  	   		flagR4 = false;
+   		}
+   		//Counters
+   		int pixels4EndR1 = 2* ppBlurModel_.getNumber().intValue();
+   		int pixels4EndR2 = 2* ppBlurModel_.getNumber().intValue();
+   		int pixels4EndR3 = 2* ppBlurModel_.getNumber().intValue();
+   		int pixels4EndR4 = 2* ppBlurModel_.getNumber().intValue();
+
+   		int initPointX;
+   		int initPointY;
+
+   		//Parallel region growing of the four branches from the position given by myCenter
+   		while(growGeneral){
+   			//Region growing of Region 1
+   			if(growRegion1){
+   				//Point inside the interior bound?
+   				initPointX = (int)pol1.elementAt(pol1.size()-1).x;
+   				initPointY = (int)pol1.elementAt(pol1.size()-1).y;
+   				Vector<Point2D.Double> contenedorCandidatos = function(pol1,pol2,pol3,pol4,boundingRegion,initPointX,initPointY);
+   				//Points for growing this region or creating a new region
+   				if(contenedorCandidatos.size()==0){
+   					//REGION which has stop growing
+   					growRegion1 = false;
+   				}else{
+   					if(contenedorCandidatos.size()==1){
+   						//Growing this region
+   						Point2D.Double newElement = contenedorCandidatos.elementAt(0);
+   						pol1.addElement(newElement);
+   					}else{
+   						//Growing other regions
+   						for(int i =1; i<contenedorCandidatos.size();i++){
+   							if(pol2.size()==0){
+   								pol2.addAll(pol1);
+   								pol2.add(contenedorCandidatos.elementAt(i));
+   								growRegion2= true;
+   							}else{
+   								if(pol3.size()==0){
+   									pol3.addAll(pol1);
+   									pol3.add(contenedorCandidatos.elementAt(i));
+   									growRegion3= true;
+   								}else{
+   									if(pol4.size()==0){
+   										pol4.addAll(pol1);
+   										pol4.add(contenedorCandidatos.elementAt(i));
+   										growRegion4= true;
+   									}else{
+   										WJSettings.log("Detected region but not included" + contenedorCandidatos.elementAt(i).x + "y  " + contenedorCandidatos.elementAt(i).y);
+   									}
+   								}
+   							}
+   						}
+   						Point2D.Double newElement = contenedorCandidatos.elementAt(0);
+   						pol1.addElement(newElement);
+   					}
+   				}
+   			}else if(flagR1 && pol1.size()>0){
+   				pixels4EndR1 --;
+   				//Check points for growing
+   				initPointX = (int)pol1.elementAt(pol1.size()-1).x;
+   				initPointY = (int)pol1.elementAt(pol1.size()-1).y;
+   				Vector<Point2D.Double> contenedorCandidatos = function2(pol1,pol2,pol3,pol4,initPointX,initPointY);
+   				//Points for growing this region or creating a new region
+   				if(contenedorCandidatos.size()==0){
+   					//No more possibilities
+   					flagR1 = false;
+   				}else{
+   					//We suppose that the four regions have been detected
+   					Point2D.Double newElement = contenedorCandidatos.elementAt(0);
+   					pol1.addElement(newElement);
+   				}
+   				//FInish the over growing
+   				if(pixels4EndR1<=0){
+   					flagR1=false;
+   				}
+   			}
+
+   			//Same for region2
+   			if(growRegion2){
+   				initPointX = (int)pol2.elementAt(pol2.size()-1).x;
+   				initPointY = (int)pol2.elementAt(pol2.size()-1).y;
+   				Vector<Point2D.Double> contenedorCandidatos = function(pol1,pol2,pol3,pol4,boundingRegion,initPointX,initPointY);
+   				if(contenedorCandidatos.size()==0){
+   					growRegion2 = false;
+   				}else{
+   					if(contenedorCandidatos.size()==1){
+   						Point2D.Double newElement = contenedorCandidatos.elementAt(0);
+   						pol2.addElement(newElement);
+   					}else{
+   						for(int i =1; i<contenedorCandidatos.size();i++){
+   							if(pol3.size()==0){
+   								pol3.addAll(pol2);
+   								pol3.add(contenedorCandidatos.elementAt(i));
+   								growRegion3= true;
+   							}else{
+   								if(pol4.size()==0){
+   									pol4.addAll(pol2);
+   									pol4.add(contenedorCandidatos.elementAt(i));
+   									growRegion4= true;
+   								}else{
+   									WJSettings.log("Detected region but not included" + contenedorCandidatos.elementAt(i).x + "y  " + contenedorCandidatos.elementAt(i).y);
+   								}
+   							}
+   						}
+   						Point2D.Double newElement = contenedorCandidatos.elementAt(0);
+   						pol2.addElement(newElement);
+   					}
+   				}
+   			}else if(flagR2 && pol2.size()>0){
+   				pixels4EndR2 --;
+   				//Check points for growing
+   				initPointX = (int)pol2.elementAt(pol2.size()-1).x;
+   				initPointY = (int)pol2.elementAt(pol2.size()-1).y;
+   				Vector<Point2D.Double> contenedorCandidatos = function2(pol1,pol2,pol3,pol4,initPointX,initPointY);
+   				//Points for growing this region or creating a new region
+   				if(contenedorCandidatos.size()==0){
+   					//No more possibilities
+   					flagR2 = false;
+   				}else{
+   					//We suppose that the four regions have been detected
+   					Point2D.Double newElement = contenedorCandidatos.elementAt(0);
+   					pol2.addElement(newElement);
+   				}
+   				//FInish the over growing
+   				if(pixels4EndR2<=0){
+   					flagR2=false;
+   				}
+   			}
+   			//Region 3
+   			if(growRegion3){
+   				initPointX = (int)pol3.elementAt(pol3.size()-1).x;
+   				initPointY = (int)pol3.elementAt(pol3.size()-1).y;
+   				Vector<Point2D.Double> contenedorCandidatos = function(pol1,pol2,pol3,pol4,boundingRegion,initPointX,initPointY);
+   				if(contenedorCandidatos.size()==0){
+   					growRegion3 = false;
+   				}else{
+   					if(contenedorCandidatos.size()==1){
+   						Point2D.Double newElement = contenedorCandidatos.elementAt(0);
+   						pol3.addElement(newElement);
+   					}else{
+   						for(int i =1; i<contenedorCandidatos.size();i++){
+   							if(pol4.size()==0){
+   								pol4.addAll(pol3);
+   								pol4.add(contenedorCandidatos.elementAt(i));
+   								growRegion4= true;
+   							}else{
+   								WJSettings.log("Detected region but not included" + contenedorCandidatos.elementAt(i).x + "y  " + contenedorCandidatos.elementAt(i).y);
+   							}
+   						}
+   						Point2D.Double newElement = contenedorCandidatos.elementAt(0);
+   						pol3.addElement(newElement);
+   					}
+   				}
+   			}else if(flagR3 && pol3.size()>0){
+   				pixels4EndR3 --;
+   				//Check points for growing
+   				initPointX = (int)pol3.elementAt(pol3.size()-1).x;
+   				initPointY = (int)pol3.elementAt(pol3.size()-1).y;
+   				Vector<Point2D.Double> contenedorCandidatos = function2(pol1,pol2,pol3,pol4,initPointX,initPointY);
+   				//Points for growing this region or creating a new region
+   				if(contenedorCandidatos.size()==0){
+   					//No more possibilities
+   					flagR3 = false;
+   				}else{
+   					//We suppose that the four regions have been detected
+   					Point2D.Double newElement = contenedorCandidatos.elementAt(0);
+   					pol3.addElement(newElement);
+   				}
+   				//FInish the over growing
+   				if(pixels4EndR3<=0){
+   					flagR3=false;
+   				}
+   			}
+
+   			//Region 4
+   			if(growRegion4){
+   				initPointX = (int)pol4.elementAt(pol4.size()-1).x;
+   				initPointY = (int)pol4.elementAt(pol4.size()-1).y;
+   				Vector<Point2D.Double> contenedorCandidatos = function(pol1,pol2,pol3,pol4,boundingRegion,initPointX,initPointY);
+   				if(contenedorCandidatos.size()==0){
+   					growRegion4 = false;
+   				}else{
+   					if(contenedorCandidatos.size()==1){
+   						Point2D.Double newElement = contenedorCandidatos.elementAt(0);
+   						pol4.addElement(newElement);
+   					}else{
+   						for(int i =1; i<contenedorCandidatos.size();i++){
+   							WJSettings.log("Detected region but not included" + contenedorCandidatos.elementAt(i).x + "y  " + contenedorCandidatos.elementAt(i).y);
+   						}
+   						Point2D.Double newElement = contenedorCandidatos.elementAt(0);
+   						pol4.addElement(newElement);
+   					}
+   				}
+   			}else if(flagR4 && pol4.size()>0){
+   				pixels4EndR4 --;
+   				//Check points for growing
+   				initPointX = (int)pol4.elementAt(pol4.size()-1).x;
+   				initPointY = (int)pol4.elementAt(pol4.size()-1).y;
+   				Vector<Point2D.Double> contenedorCandidatos = function2(pol1,pol2,pol3,pol4,initPointX,initPointY);
+   				//Points for growing this region or creating a new region
+   				if(contenedorCandidatos.size()==0){
+   					//No more possibilities
+   					flagR4 = false;
+   				}else{
+   					//We suppose that the four regions have been detected
+   					Point2D.Double newElement = contenedorCandidatos.elementAt(0);
+   					pol4.addElement(newElement);
+   				}
+   				//FInish the over growing
+   				if(pixels4EndR4<=0){
+   					flagR4=false;
+   				}
+   			}
+   			if(growRegion1 == false && growRegion2 == false && growRegion3==false && growRegion4==false && flagR1==false && flagR2==false && flagR3==false && flagR4==false){
+   				growGeneral = false;
+   			}
+   		}
+
+	   	if(settings.getNewCenter()){
+	   		//Reformating center
+	   		int[] reformatCenter = centerInAxis(pol1,pol2,pol3,pol4);
+
+	   		switch(reformatCenter[0]){
+		   		case 0:
+		   			pol1.removeElementAt(0);
+		   			for(int i=0;i<=reformatCenter[1];i++){
+		   				pol2.add(0,pol1.elementAt(0));
+		   				pol3.add(0,pol1.elementAt(0));
+		   				pol4.add(0,pol1.elementAt(0));
+		   				if(i!=reformatCenter[1]){
+		   					pol1.removeElementAt(0);
+		   				}
+		   			}
+		   			break;
+		   		case 1:
+		   			//Remove Center, all shares at the beginning this point so we do not add
+		   			pol2.removeElementAt(0);
+		   			for(int i=0;i<=reformatCenter[1];i++){
+		   				pol1.add(0,pol2.elementAt(0));
+		   				pol3.add(0,pol2.elementAt(0));
+		   				pol4.add(0,pol2.elementAt(0));
+		   				if(i!=reformatCenter[1]){
+		   					pol2.removeElementAt(0);
+		   				}
+		   			}
+		   			break;
+		   		case 2:
+		   			pol3.removeElementAt(0);
+		   			for(int i=0;i<=reformatCenter[1];i++){
+		   				pol1.add(0,pol3.elementAt(0));
+		   				pol2.add(0,pol3.elementAt(0));
+		   				pol4.add(0,pol3.elementAt(0));
+		   				if(i!=reformatCenter[1]){
+		   					pol3.removeElementAt(0);
+		   				}
+		   			}
+		   			break;
+		   		case 3:
+		   			pol4.removeElementAt(0);
+		   			for(int i=0;i<=reformatCenter[1];i++){
+		   				pol1.add(0,pol4.elementAt(0));
+		   				pol2.add(0,pol4.elementAt(0));
+		   				pol3.add(0,pol4.elementAt(0));
+		   				if(i!=reformatCenter[1]){
+		   					pol4.removeElementAt(0);
+		   				}
+		   			}
+		   			break;
+		   	   	default:
+		   	   		break;
+	   	   	}
+	   	}else{
+	   	}
+
+   		//Creating ROIs
+
+	   	//ROI1
+   		PolygonRoi branch1Polyline = buildPolygonRoi(pol1, "1st detected branch");
+   		PolygonRoi branch2Polyline = buildPolygonRoi(pol2, "2nd detected branch");
+   		PolygonRoi branch3Polyline = buildPolygonRoi(pol3, "3rd detected branch");
+   		PolygonRoi branch4Polyline = buildPolygonRoi(pol4, "4th detected branch");
+
+   		//Detection of the D/V part
+   		//Tacking 3 points from each region (center, middle and end)
+   		//We detect first the posterior part
+   		int[][] line1 = new int[3][2];
+   		line1[0][0]= (int) Math.round(pol1.firstElement().x);
+   		line1[0][1]= (int) Math.round(pol1.firstElement().y);
+   		line1[1][0]= (int) Math.round(pol1.elementAt(pol1.size()/2).x);
+   		line1[1][1]= (int) Math.round(pol1.elementAt(pol1.size()/2).y);
+   		line1[2][0]= (int) Math.round(pol1.lastElement().x);
+   		line1[2][1]= (int) Math.round(pol1.lastElement().y);
+   		int[][] line2 = new int[3][2];
+   		line2[0][0]= (int) Math.round(pol2.firstElement().x);
+   		line2[0][1]= (int) Math.round(pol2.firstElement().y);
+   		line2[1][0]= (int) Math.round(pol2.elementAt(pol2.size()/2).x);
+   		line2[1][1]= (int) Math.round(pol2.elementAt(pol2.size()/2).y);
+   		line2[2][0]= (int) Math.round(pol2.lastElement().x);
+   		line2[2][1]= (int) Math.round(pol2.lastElement().y);
+   		int[][] line3 = new int[3][2];
+   		line3[0][0]= (int) Math.round(pol3.firstElement().x);
+   		line3[0][1]= (int) Math.round(pol3.firstElement().y);
+   		line3[1][0]= (int) Math.round(pol3.elementAt(pol3.size()/2).x);
+   		line3[1][1]= (int) Math.round(pol3.elementAt(pol3.size()/2).y);
+   		line3[2][0]= (int) Math.round(pol3.lastElement().x);
+   		line3[2][1]= (int) Math.round(pol3.lastElement().y);
+   		int[][] line4 = new int[3][2];
+   		line4[0][0]= (int) Math.round(pol4.firstElement().x);
+   		line4[0][1]= (int) Math.round(pol4.firstElement().y);
+   		line4[1][0]= (int) Math.round(pol4.elementAt(pol4.size()/2).x);
+   		line4[1][1]= (int) Math.round(pol4.elementAt(pol4.size()/2).y);
+   		line4[2][0]= (int) Math.round(pol4.lastElement().x);
+   		line4[2][1]= (int) Math.round(pol4.lastElement().y);
+
+   		//We create another vector in order to look for the anterior part of the wing pouch
+   		int [][] secondDetection = new int[5][2];
+//
+//	   	switch(WPouchDetector.detectSide(line1,line2,line3,line4)){
+//	   		case 0:
+//	   			branch1Polyline.setName(branch1Polyline.getName()+" (P)");
+//
+//	   			//Filling the vector
+//	   			secondDetection[0][0] = (int) Math.round(pol1.lastElement().x);
+//	   			secondDetection[0][1] = (int) Math.round(pol1.lastElement().y);
+//	   			secondDetection[1][0] = (int) Math.round(pol1.firstElement().x);
+//	   			secondDetection[1][1] = (int) Math.round(pol1.firstElement().y);
+//	   			secondDetection[2][0] = (int) Math.round(pol2.lastElement().x);
+//	   			secondDetection[2][1] = (int) Math.round(pol2.lastElement().y);
+//	   			secondDetection[3][0] = (int) Math.round(pol3.lastElement().x);
+//	   			secondDetection[3][1] = (int) Math.round(pol3.lastElement().y);
+//	   			secondDetection[4][0] = (int) Math.round(pol4.lastElement().x);
+//	   			secondDetection[4][1] = (int) Math.round(pol4.lastElement().y);
+//	   			switch(WPouchDetector.computeOtherSide(secondDetection)){
+//		   			case 0:
+//		   				branch2Polyline.setName(branch2Polyline.getName()+" (A)");
+//		   				break;
+//		   			case 1:
+//		   				branch3Polyline.setName(branch3Polyline.getName()+" (A)");
+//		   				break;
+//		   			case 2:
+//		   				branch4Polyline.setName(branch4Polyline.getName()+" (A)");
+//		   				break;
+//	   			}
+//	   			break;
+//	   		case 1:
+//	   			branch2Polyline.setName(branch2Polyline.getName()+" (P)");
+//
+//	   			//Filling the vector
+//	   			secondDetection[0][0] = (int) Math.round(pol2.lastElement().x);
+//	   			secondDetection[0][1] = (int) Math.round(pol2.lastElement().y);
+//	   			secondDetection[1][0] = (int) Math.round(pol2.firstElement().x);
+//	   			secondDetection[1][1] = (int) Math.round(pol2.firstElement().y);
+//	   			secondDetection[2][0] = (int) Math.round(pol1.lastElement().x);
+//	   			secondDetection[2][1] = (int) Math.round(pol1.lastElement().y);
+//	   			secondDetection[3][0] = (int) Math.round(pol3.lastElement().x);
+//	   			secondDetection[3][1] = (int) Math.round(pol3.lastElement().y);
+//	   			secondDetection[4][0] = (int) Math.round(pol4.lastElement().x);
+//	   			secondDetection[4][1] = (int) Math.round(pol4.lastElement().y);
+//	   			switch(WPouchDetector.computeOtherSide(secondDetection)){
+//		   			case 0:
+//		   				branch1Polyline.setName(branch1Polyline.getName()+" (A)");
+//		   				break;
+//		   			case 1:
+//		   				branch3Polyline.setName(branch3Polyline.getName()+" (A)");
+//		   				break;
+//		   			case 2:
+//		   				branch4Polyline.setName(branch4Polyline.getName()+" (A)");
+//		   				break;
+//	   			}
+//	   			break;
+//	   		case 2:
+//	   			branch3Polyline.setName(branch3Polyline.getName()+" (P)");
+//
+//	   			//Filling the vector
+//	   			secondDetection[0][0] = (int) Math.round(pol3.lastElement().x);
+//	   			secondDetection[0][1] = (int) Math.round(pol3.lastElement().y);
+//	   			secondDetection[1][0] = (int) Math.round(pol3.firstElement().x);
+//	   			secondDetection[1][1] = (int) Math.round(pol3.firstElement().y);
+//	   			secondDetection[2][0] = (int) Math.round(pol1.lastElement().x);
+//	   			secondDetection[2][1] = (int) Math.round(pol1.lastElement().y);
+//	   			secondDetection[3][0] = (int) Math.round(pol2.lastElement().x);
+//	   			secondDetection[3][1] = (int) Math.round(pol2.lastElement().y);
+//	   			secondDetection[4][0] = (int) Math.round(pol4.lastElement().x);
+//	   			secondDetection[4][1] = (int) Math.round(pol4.lastElement().y);
+//
+//	   			switch(WPouchDetector.computeOtherSide(secondDetection)){
+//		   			case 0:
+//		   				branch1Polyline.setName(branch1Polyline.getName()+" (A)");
+//		   				break;
+//		   			case 1:
+//		   				branch2Polyline.setName(branch2Polyline.getName()+" (A)");
+//		   				break;
+//		   			case 2:
+//		   				branch4Polyline.setName(branch4Polyline.getName()+" (A)");
+//		   				break;
+//	   			}
+//	   			break;
+//	   		case 3:
+//	   			branch4Polyline.setName(branch4Polyline.getName()+" (P)");
+//
+//	   			//Filling the vector
+//	   			secondDetection[0][0] = (int) Math.round(pol4.lastElement().x);
+//	   			secondDetection[0][1] = (int) Math.round(pol4.lastElement().y);
+//	   			secondDetection[1][0] = (int) Math.round(pol4.firstElement().x);
+//	   			secondDetection[1][1] = (int) Math.round(pol4.firstElement().y);
+//	   			secondDetection[2][0] = (int) Math.round(pol1.lastElement().x);
+//	   			secondDetection[2][1] = (int) Math.round(pol1.lastElement().y);
+//	   			secondDetection[3][0] = (int) Math.round(pol2.lastElement().x);
+//	   			secondDetection[3][1] = (int) Math.round(pol2.lastElement().y);
+//	   			secondDetection[4][0] = (int) Math.round(pol3.lastElement().x);
+//	   			secondDetection[4][1] = (int) Math.round(pol3.lastElement().y);
+//	   			switch(WPouchDetector.computeOtherSide(secondDetection)){
+//		   			case 0:
+//		   				branch1Polyline.setName(branch1Polyline.getName()+" (A)");
+//		   				break;
+//		   			case 1:
+//		   				branch2Polyline.setName(branch2Polyline.getName()+" (A)");
+//		   				break;
+//		   			case 2:
+//		   				branch3Polyline.setName(branch3Polyline.getName()+" (A)");
+//		   				break;
+//	   			}
+//	   			break;
+//	   		default:
+//	   			IJ.error("Not possible to distinguish branches");
+//	   			break;
+//   		}
+//
+   		roiManager_.addRoi(branch1Polyline);
+   		roiManager_.addRoi(branch2Polyline);
+   		roiManager_.addRoi(branch3Polyline);
+   		roiManager_.addRoi(branch4Polyline);
+
+   		extractedShapes.setBranch(0, branch1Polyline.getPolygon());
+   		extractedShapes.setBranch(1, branch2Polyline.getPolygon());
+   		extractedShapes.setBranch(2, branch3Polyline.getPolygon());
+   		extractedShapes.setBranch(3, branch4Polyline.getPolygon());
+   	}
+
+
+ // ----------------------------------------------------------------------------
+
+   	/**
+   	 * METHOD used for cleaning variables and being able to launch the program again
+   	 */
+   	private void reStart() {
+   		if (wjWorker_ != null)
+   			wjWorker_.setRunMode(WJWorker.WJ_IDLE);
+
+   		roiManager_ 					= RoiManager.getInstance();
+		if(roiManager_!=null){
+			roiManager_.close();
+		}
+		roiManager_ 				= new RoiManager();
+   		maximumProjectionProcess 	= null;
+   		prePro 						= null;
+   		cleanSkeletor 				= null;
+   		skeleBlur 					= null;
+   		maximumProjectionPlusCH1 	= null;
+   		maximumProjectionPlusCH2 	= null;
+   		totalRegions				= null;
+   		stage_						= 0;
+        center 						= new int[4];
+   		mysnake						= null;
+   		apRegion					= null;
+		extractedShapes 			= new ExtractedShapes();
+		exitWingJ();
+   	}
+
+
+
+
+	private Vector<Point2D.Double> function(Vector<Point2D.Double> pol1, Vector<Point2D.Double> pol2,Vector<Point2D.Double> pol3,Vector<Point2D.Double> pol4, Roi shapeRoi5, int initPointX, int initPointY){
+		Vector<Point2D.Double> contenedorCandidatos= new Vector<Point2D.Double>(0);
+			for(int k=initPointX-1; k< initPointX+2;k++){
+				for(int l=initPointY-1; l< initPointY+2;l++){
+					Point2D.Double toCheck = new Point2D.Double(k,l);
+					if(!pol1.contains(toCheck) && !pol2.contains(toCheck) && !pol3.contains(toCheck) && !pol4.contains(toCheck) && cleanSkeletor.getPixelValue(k, l)!=0 && shapeRoi5.contains(k,l)){
+						contenedorCandidatos.addElement(toCheck);
+					}
+				}
+			}
+			//Deleting points which can not be used for continue growing
+			Vector<Vector<Point2D.Double>> candidatesHoods = new Vector<Vector<Point2D.Double>>(0);
+			for(int i=0; i<contenedorCandidatos.size();i++){
+				int x4Hood = (int)contenedorCandidatos.elementAt(i).x;
+				int y4Hood = (int)contenedorCandidatos.elementAt(i).y;
+				Vector<Point2D.Double> hood = new Vector<Point2D.Double>(0);
+				//Point's hood
+				for(int k=x4Hood-1; k< x4Hood+2;k++){
+					for(int l=y4Hood-1; l< y4Hood+2;l++){
+						Point2D.Double candidate = new Point2D.Double(k,l);
+						if(!pol1.contains(candidate) && !pol2.contains(candidate) && !pol3.contains(candidate) && !pol4.contains(candidate) && cleanSkeletor.getPixelValue(k, l)!=0 && shapeRoi5.contains(k,l)){
+							//He is not in his hood
+							if(k==x4Hood && l==y4Hood){
+
+							}else{
+								hood.add(candidate);
+							}
+						}
+					}
+				}
+				//Cleaning undesired hood
+				if(hood.size()==0){
+					contenedorCandidatos.removeElementAt(i);
+				}else{
+					candidatesHoods.add(hood);
+				}
+			}
+			for(int a =0; a<candidatesHoods.size()-1;a++){
+				Vector<Point2D.Double> hood = candidatesHoods.elementAt(a);
+				for(int b =a+1; b<candidatesHoods.size();b++){
+					Vector<Point2D.Double> hood2 = candidatesHoods.elementAt(b);
+					if(hood.containsAll(hood2)){
+						candidatesHoods.removeElementAt(b);
+						contenedorCandidatos.removeElementAt(b);
+					}
+				}
+			}
+
+		return contenedorCandidatos;
+	}
+
+private Vector<Point2D.Double> function2(Vector<Point2D.Double> pol1,Vector<Point2D.Double> pol2,Vector<Point2D.Double> pol3,Vector<Point2D.Double> pol4, int initPointX, int initPointY){
+
+		Vector<Point2D.Double> contenedorCandidatos= new Vector<Point2D.Double>(0);
+			for(int k=initPointX-1; k< initPointX+2;k++){
+				for(int l=initPointY-1; l< initPointY+2;l++){
+					Point2D.Double toCheck = new Point2D.Double(k,l);
+					if(!pol1.contains(toCheck) && !pol2.contains(toCheck) && !pol3.contains(toCheck) && !pol4.contains(toCheck) && cleanSkeletor.getPixelValue(k, l)!=0){
+						contenedorCandidatos.addElement(toCheck);
+					}
+				}
+			}
+			//Deleting points which can not be used for continue growing
+			Vector<Vector<Point2D.Double>> candidatesHoods = new Vector<Vector<Point2D.Double>>(0);
+			for(int i=0; i<contenedorCandidatos.size();i++){
+				int x4Hood = (int)contenedorCandidatos.elementAt(i).x;
+				int y4Hood = (int)contenedorCandidatos.elementAt(i).y;
+				Vector<Point2D.Double> hood = new Vector<Point2D.Double>(0);
+				//Point's hood
+				for(int k=x4Hood-1; k< x4Hood+2;k++){
+					for(int l=y4Hood-1; l< y4Hood+2;l++){
+						Point2D.Double candidate = new Point2D.Double(k,l);
+						if(!pol1.contains(candidate) && !pol2.contains(candidate) && !pol3.contains(candidate) && !pol4.contains(candidate) && cleanSkeletor.getPixelValue(k, l)!=0 ){
+							//He is not in his hood
+							if(k==x4Hood && l ==y4Hood){
+
+							}else{
+								hood.add(candidate);
+							}
+						}
+					}
+				}
+				//Cleaning undesired hood
+				if(hood.size()==0){
+					contenedorCandidatos.removeElementAt(i);
+				}else{
+					candidatesHoods.add(hood);
+				}
+			}
+			for(int a =0; a<candidatesHoods.size()-1;a++){
+				Vector<Point2D.Double> hood = candidatesHoods.elementAt(a);
+				for(int b =a+1; b<candidatesHoods.size();b++){
+					Vector<Point2D.Double> hood2 = candidatesHoods.elementAt(b);
+					if(hood.containsAll(hood2)){
+						candidatesHoods.removeElementAt(b);
+						contenedorCandidatos.removeElementAt(b);
+					}
+				}
+			}
+
+		return contenedorCandidatos;
+	}
+
+
+
+	/** Returns an exception if input images are not compatible */
+	public void checkStrctureAndExpressionImagesCompatibility() throws Exception {
+
+		int ch01Width = structureImages_.getWidth();
+		int ch01Height = structureImages_.getHeight();
+		int ch02Width = expressionImages_.getWidth();
+		int ch02Height = expressionImages_.getHeight();
+
+		if (ch01Width != ch02Width)
+			throw new Exception("ERROR: Structure and gene expression images must have the same width");
+		if (ch01Height != ch02Height)
+			throw new Exception("ERROR: Structure and gene expression images must have the same height");
+	}
