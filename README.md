@@ -25,7 +25,7 @@ Videos:
 
 Please include the following citation in any publication describing results achieved using WingJ.
 
-> Schaffter, Thomas. "From genes to organisms: Bioinformatics system models and software." *École polytechnique fédérale de Lausanne EPFL* (2014).
+> [Schaffter, Thomas. "From genes to organisms: Bioinformatics system models and software." *École polytechnique fédérale de Lausanne EPFL* (2014).](https://infoscience.epfl.ch/record/196586)
 
 ## Build
 
