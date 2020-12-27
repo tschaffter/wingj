@@ -1,0 +1,74 @@
+/* Copyright (c) 2009-2012 Thomas Schaffter */
+/* ---( wingviewer global styles )---*/
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	line-height: 1.5em;
+	text-align: left;
+	color: #333;
+	background: rgb(248,248,248);
+	overflow-y: scroll;
+}
+
+h2 { 
+	color: rgb(45,75,153); 
+	font-size: 14px; 
+	font-weight: bold; 
+	font-family: Verdana, Helvetica, Arial, sans-serif ;
+}
+
+h6 { 
+	color: rgb(102,102,102); 
+	font-size: 9px; 
+	font-weight: normal; 
+	font-family: Verdana, Helvetica, Arial, sans-serif ;
+}
+
+img {
+  border: none;
+}
+
+
+/* ---( layout structure )---*/
+
+#main-table {
+  width: 1080px;
+  margin: 4px auto;
+}
+
+/* ---( boxes )---*/
+
+.content_box_top {
+  background: url(images/content_box_top.png) no-repeat 0 0;
+  width: 520px;
+  height: 13px;	
+}
+
+.content_box_middle {
+  background: url(images/content_box_middle.png) repeat-y 0 0;
+  width: 460px;
+  padding: 3px 25px 0 30px;
+}
+
+.content_box_bottom {
+  background: url(images/content_box_bottom.png) no-repeat 0 0;
+  width: 520px;
+  height: 18px;	
+}
+
+.box_header { margin-top: 5pt; }
+
+
+/* ---( misc )---*/
+
+.note {
+  color: rgb(102,102,102);
+}
+
+.mininote {
+  font-size: 90%;
+  color: rgb(102,102,102);
+}

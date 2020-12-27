@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<link rel="stylesheet" href="css/wingviewer.css" type="text/css" />
+<link rel="stylesheet" href="utils/lightbox/css/lightbox.css" type="text/css" media="screen" />
+
+<script type="text/javascript" src="js/wingviewer.js"></script>
+<script type="text/javascript" src="js/image-loader.js"></script>
+<script type="text/javascript" src="utils/jquery/jquery-1.2.6.min.js"></script>
+<script type="text/javascript" src="utils/lightbox/js/prototype.js"></script>
+<script type="text/javascript" src="utils/lightbox/js/scriptaculous.js?load=effects,builder"></script>
+<script type="text/javascript" src="utils/lightbox/js/lightbox.js"></script>
+
+<script type="text/javascript">
+	imagesDirectory = "images/";
+</script>
+
+</head>
+<body>
+
+<!-- MAIN CONTENT BOX 1 ================================================= -->
+	<center>
+	<table border="0" frame="void" cellpadding="0" cellspacing="0">
+		<tr valign="top">
+			<td class="content_box_top"></td>
+		</tr>
+		<tr valign="top">
+			<td class="content_box_middle">
+				<h2 class="box_header">Virtual Drosophila wing</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui o?cia deserunt mollit anim id est laborum.</p>
+				<table>
+				<tr>
+					<td valign="top" width="100">
+						<form name="wviewerForm">
+							<p><select name="ch00" onchange="updateWingViewer()">
+								<option value="brkAB" selected="selected">Brk-AB</option>
+								<option value="dadGFP">Dad-GFP</option>
+								<option value="ombAB">Omb-AB</option>
+								<option value="pmadAB">Pmad-AB</option>
+								<option value="salAB">Sal-AB</option>
+								<!-- <option value="wg-ptcAB">Wg-Ptc-AB</option> -->
+								<option value="none">None</option>
+							</select><br>
+							<select name="ch01" onchange="updateWingViewer()">
+								<option value="brkAB">Brk-AB</option>
+								<option value="dadGFP" selected="selected">Dad-GFP</option>
+								<option value="ombAB">Omb-AB</option>
+								<option value="pmadAB">Pmad-AB</option>
+								<option value="salAB">Sal-AB</option>
+								<!-- <option value="wg-ptcAB">Wg-Ptc-AB</option> -->
+								<option value="none">None</option>
+							</select><br>
+							<select name="ch02" onchange="updateWingViewer()">
+								<option value="brkAB">Brk-AB</option>
+								<option value="dadGFP">Dad-GFP</option>
+								<option value="ombAB" selected="selected">Omb-AB</option>
+								<option value="pmadAB">Pmad-AB</option>
+								<option value="salAB">Sal-AB</option>
+								<!-- <option value="wg-ptcAB" selected="selected">Wg-Ptc-AB</option> -->
+								<option value="none">None</option>
+							</select></p>
+							
+							<p><input type="radio" name="genotypes" onclick="updateWingViewer()" value="wt" checked = "checked">Wild type<br>
+							<input type="radio" name="genotypes" onclick="updateWingViewer()" value="pent"><i>Pent<sup>2-5</sup></i></p>
+							
+							<p><input type="radio" name="ages" onclick="updateWingViewer()" value="80h" checked = "checked">80 hours<br>
+							<input type="radio" name="ages" onclick="updateWingViewer()" value="90h">90 hours<br>
+							<input type="radio" name="ages" onclick="updateWingViewer()" value="100h">100 hours<br>
+							<input type="radio" name="ages" onclick="updateWingViewer()" value="110h">110 hours</p>
+							</form>
+						</td>
+						<td valign="top">
+							<div id="waitMessage">
+								<p><span class="note">Please wait while images are loading.</span></p>
+							</div>
+							<p>
+							<a id="wviewerLightboxLink" onclick="javascript:computeAndShowHDImage()" href="#" rel="lightbox[wingj]" title="#"><img id="panelImg"></img></a>
+							<!-- Canvas for debug (shows all channels next to each other) -->
+							<!-- <canvas id="panel" width="1400" height="273"></canvas> -->
+							</p>
+						</td>
+					</tr>
+					</table>
+					<p><span class="note">Anterior at left, dorsal at top; the dashed line represents the standard deviation of the structure; click on the image to enlarge it.</span></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td class="content_box_bottom"></td>
+		</tr>
+	</table>
+	
+	<!-- LAST UPDATE LAST UPDATE LAST UPDATE LAST UPDATE LAST UPDATE LAST UPDATE LAST UPDATE -->
+	<h6>Thomas Schaffter (thomas.schaff...@gmail.com)<br>
+	Project webpage: <a href="http://tschaffter.ch/projects/wingj" target="_blank">http://tschaffter.ch/projects/wingj</a></h6>
+
+	</center>
+</body>
+</html>
