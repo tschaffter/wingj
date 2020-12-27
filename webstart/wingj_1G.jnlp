@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JNLP File for WingJ -->
+
+<jnlp
+    spec="1.6+"
+    codebase="https://tschaffter.github.io/wingj/webstart"
+    href="wingj_1G.jnlp"
+    version="1.0">
+    <information>
+	<title>WingJ 1.0 Beta</title>
+
+	<icon href="wingj-icon-48.png"/>
+	<icon href="wingj.ico" kind="shortcut"/>
+
+	<vendor>Thomas Schaffter</vendor>
+	<homepage href="https://github.com/tschaffter/wingj" />
+	<description>Towards unsupervised and systematic segmentation of biological organisms</description>
+	<description kind="short">Towards unsupervised and systematic segmentation of biological organisms</description>
+	<description kind="tooltip">Towards unsupervised and systematic segmentation of biological organisms</description>
+	<offline-allowed/>
+
+	<shortcut online="false">
+	    <desktop />
+	    <!-- Not used to name the application, only to create an item in the Windows menu for example. -->
+	    <menu submenu="tschaffter" />
+	</shortcut>
+    </information>
+
+    <security>
+	<all-permissions/>
+    </security>
+
+    <resources>
+	<j2se version="1.6+" java-vm-args="-da" initial-heap-size="64m" max-heap-size="1024m"/>
+	<jar href="wingj.jar" main="true" download="eager"/>
+    </resources>
+
+    <application-desc main-class="ij.ImageJ">
+	<!--<argument>-macro href="WingJAutoRun.txt"</argument>-->
+	<!--<property name="plugins.dir" value="user.home" />-->
+    </application-desc>
+</jnlp>
