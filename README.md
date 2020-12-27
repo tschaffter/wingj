@@ -9,17 +9,21 @@ ImageJ plugin for unsupervised and systematic segmentation of *Drosophila* wing 
 
 ## Resources
 
-Manuals:
+### Manuals
 
 - [User Manual (PDF)](manuals/wingj-user-manual.pdf)
 - [Developer Manual (PDF)](manuals/wingj-developer-manual.pdf)
 
-Videos:
+### Videos
 
 - [Development of the Drosophila wing](https://youtu.be/ck0YbxXqUZU)
 - [WingJ: unsupervised segmentation of the Drosophila wing pouch](https://youtu.be/IY1w_TS7Nac)
 - [WingJ: unsupervised segmentation of the Drosophila embryo](https://youtu.be/othDMRkjhAg)
 - [WingJ: 3D cell nuclei detection in the Drosophila wing pouch](https://youtu.be/0PD_rzDqoYw)
+
+### Models
+
+- [Robust Quantitative Model of the Drosophila Wing Pouch](https://tschaffter.github.io/wingj/wingviewer/)
 
 ## Citation
 
