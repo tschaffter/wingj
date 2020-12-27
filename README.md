@@ -65,7 +65,7 @@ Here we generate a version of *wingj_.jar* that includes all the dependencies:
    - Export destination: wingj/wingj_.jar
    - Extract required libraries into generated JAR
 
-:exclamation: The option *Runnable JAR file* is chosen because it's the only way I found to include easily and correctly the dependencies. However, the MANIFEST file, which defines among others which Java class implements the main() method, is not required here because WingJ is run through ImageJ. Since a class containing a main method has to be selected in *Launch configuration*, any existing one does the job.
+The option *Runnable JAR file* is chosen because it's the only way I found to include easily and correctly the dependencies. However, the MANIFEST file, which defines among others which Java class implements the main() method, is not required here because WingJ is run through ImageJ. Since a class containing a main method has to be selected in *Launch configuration*, any existing one does the job.
 
 ## Install
 
@@ -76,7 +76,7 @@ This requires to have ImageJ installed on your system.
 
 Then download and install the WingJ plugin.
 
-:exclamation: The filename of the plugin ends with '_' (ImageJ standard). Thus, *wingj_.jar* refers to the ImageJ plugin while *wingj.jar* refers to the standalone release of WingJ. Note that the effective filenames include a string that indicates the version of WingJ, which doesn't need to be removed.
+Note: The filename of the plugin ends with '_' (ImageJ standard). Thus, *wingj_.jar* refers to the ImageJ plugin while *wingj.jar* refers to the standalone release of WingJ. Note that the effective filenames include a string that indicates the version of WingJ, which doesn't need to be removed.
 
 3. Download the [latest release of the WingJ plugin](wingj_.jar)
 4. Move the WingJ plugin to
