@@ -70,7 +70,7 @@ Here we generate a version of *wingj.jar* that includes all the dependencies:
 
 The option *Runnable JAR file* is chosen because it's the only way I found to include easily and correctly the dependencies. However, the MANIFEST file, which defines among others which Java class implements the main() method, is not required here because WingJ is run through ImageJ. Since a class containing a main method has to be selected in *Launch configuration*, any existing one does the job.
 
-## Add WingJ plugin to ImageJ
+## Add the WingJ plugin to ImageJ
 
 In case you want to add the WingJ plugin to an existing installation of ImageJ,
 you need first to build the plugin (see above) or download the version available
