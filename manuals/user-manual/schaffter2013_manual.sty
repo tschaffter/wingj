@@ -1,0 +1,483 @@
+% Copyright (c) 2010-2012 Thomas Schaffter
+% 
+% This file is licensed under a
+% Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License.
+% 
+% You should have received a copy of the license along with this
+% work. If not, see http://creativecommons.org/licenses/by-nc-nd/3.0/.
+% 
+% If this software was useful for your scientific work, please cite our paper(s)
+% listed on http://tschaffter.ch.
+% 
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+% THE SOFTWARE.
+%
+% Adapted from the Latex document written by Xavier Perseguers.
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{schaffter2013_manual}
+  [2006/05/22 v.2
+  Chapter Style Redefinition for LaTeX]
+\RequirePackage{fancyhdr}					% Header
+\RequirePackage{vmargin}					% Margin
+\RequirePackage{sectsty}					% Define section fonts
+
+% -----------------------------------------------------------------------
+%  COLOR
+% -----------------------------------------------------------------------
+
+%blue
+\definecolor{white}{rgb}{1,1,1}
+% \definecolor{greenlgh}{rgb}{0.47,0.66,0.85}
+\definecolor{green}{rgb}{0.13,0.29,0.53}
+\definecolor{greenblk}{rgb}{0.20,0.40,0.60}
+
+%green
+%\definecolor{green}{rgb}{0.25,0.32,0.09}
+%\definecolor{greenblk}{rgb}{0.16,0.16,0.07}
+%\definecolor{white}{rgb}{1,1,1}
+
+%gray
+%\definecolor{green}{rgb}{0.25,0.25,0.25}
+%\definecolor{greenblk}{rgb}{0.16,0.16,0.16}
+%\definecolor{white}{rgb}{1,1,1}
+
+% -----------------------------------------------------------------------
+%  DOCUMENT
+% -----------------------------------------------------------------------
+%\def\titlefont{\normalfont\large\sf}
+%\fontfamily{cmss}
+\selectfont\sffamily
+%\parindent10pt % was 10
+
+% -----------------------------------------------------------------------
+%  MARGES
+% -----------------------------------------------------------------------
+\setpapersize{A4}
+% \setmarginsrb{64pt}{40pt}{64pt}{42pt}{18pt}{12pt}{12pt}{36pt}
+\setmarginsrb{90pt}{40pt}{90pt}{42pt}{18pt}{36pt}{12pt}{36pt}
+
+
+%\setmarginsrb{60pt}{40pt}{60pt}{22pt}{18pt}{12pt}{12pt}{36pt}
+%\setmarginsrb{60pt}{18pt}{48pt}{28pt}{18pt}{12pt}{12pt}{36pt}
+%\setmarginsrb{a}{b}{c}{d}{e}{f}{g}{h}
+%
+% a => left margin
+% b => top margin
+% c => right margin
+% d => bottom margin
+% e => header height
+% f => distance between header and text
+% g => footer height
+% h => distance between bottom page and bottom footer
+
+
+% -----------------------------------------------------------------------
+%  HEADER
+% -----------------------------------------------------------------------
+\pagestyle{fancy}
+% with this we ensure that the chapter and section
+% headings are in lowercase.
+% \renewcommand{\chaptermark}[1]{\markboth{\chaptername \ \thechapter : #1}{}}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+
+% Delete current setting for header and footer
+\fancyhf{}          
+
+% Header
+%\fancyhead[LE,RO]{\bfseries\thepage}
+%\fancyhead[LO]{\bfseries\hspace{-0em}\rightmark}
+%\fancyhead[RE]{\bfseries\thechapter - \leftmark}
+\fancyhead[LE]{\sffamily\bfseries{\headerTitle}} % \sffamily\bfseries\textsc
+\fancyhead[RO]{\sffamily\bfseries\leftmark} % \sffamily\bfseries
+%\fancyhead[LO]{\bfseries\hspace{-0em}\rightmark}
+%\fancyhead[RE]{\sffamily\bfseries\thechapter : \leftmark}
+\renewcommand{\headrulewidth}{0.5pt}
+
+% Footer
+%\renewcommand{\footrulewidth}{0.5pt}
+
+%\ifnum \c@thechapter >0
+\fancyfoot[LE,RO]{\sffamily\bfseries{\thepage}} % \thechapter-\thepage}}
+
+%\else
+%\fancyfoot[LE,RO]{\sffamily\bfseries{\thepage}}
+%\fi
+%\fancyfoot[LO,RE]{\sffamily\bfseries{\partname \thepart}}
+
+
+%\addtolength{\headheight}{2.34pt} % make space for the rule
+%
+%\fancypagestyle{plain}{
+%  \fancyhead{}      % get rid of headers on plain pages
+%  \renewcommand{\headrulewidth}{0pt} % and the line
+%}
+
+% -----------------------------------------------------------------------
+%  FIGURE
+% -----------------------------------------------------------------------
+%%
+%%\renewcommand{\thefigure}{\thesection-\arabic{figure}}
+
+%\renewcommand{\labelitemi}{$\triangleright$}
+
+% -----------------------------------------------------------------------
+%  OTHER
+% -----------------------------------------------------------------------
+
+\RequirePackage{boxedminipage}
+%
+%\RequirePackage{pifont}
+%%\RequirePackage{pxfonts}
+
+%\RequirePackage{shortvrb}
+%\RequirePackage{array}
+%
+%\baselineskip12pt plus1pt minus 1pt
+%\MakeShortVerb{\"}
+%
+
+% -----------------------------------------------------------------------
+%  OTHER
+% -----------------------------------------------------------------------
+\newlength\Linewidth
+\def\findlength{\setlength\Linewidth\linewidth
+\addtolength\Linewidth{-4\fboxrule}
+\addtolength\Linewidth{-3\fboxsep}
+}
+%
+\newenvironment{examplebox}{\par\begingroup%
+   \setlength{\fboxsep}{5pt}\findlength%
+   \setbox0=\vbox\bgroup\noindent%
+   \hsize=\Linewidth%
+   \begin{minipage}{\Linewidth}\slshape\small}%
+    {\end{minipage}\egroup%
+    \vspace{6pt}%
+    \noindent\textcolor{greenblk}{\fboxsep2.5pt\fbox%
+     {\fboxsep5pt\colorbox{greenlgh}{\normalcolor\box0}}}%
+    \endgroup\par\addvspace{6pt minus 3pt}\noindent%
+    \normalcolor\ignorespacesafterend}
+\let\Examplebox\examplebox
+\let\endExamplebox\endexamplebox
+
+\newenvironment{codebox}{\par\begingroup%
+   \setlength{\fboxsep}{5pt}\findlength%
+   \setbox0=\vbox\bgroup\noindent%
+   \hsize=\Linewidth%
+   \begin{minipage}{\Linewidth}\color{white}\ttfamily\small}%
+    {\end{minipage}\egroup%
+    \vspace{6pt}%
+    \noindent\textcolor{greenblk}{\fboxsep2.5pt\fbox%
+     {\fboxsep5pt\colorbox{green}{\normalcolor\box0}}}%
+    \endgroup\par\addvspace{6pt minus 3pt}\noindent%
+    \normalcolor\ignorespacesafterend}
+\let\Codeboxbox\codebox
+\let\endCodebox\endcodeebox
+
+% -----------------------------------------------------------------------
+%  CHAPTER
+% -----------------------------------------------------------------------
+
+\def\thickhrulefill{\leavevmode \leaders \hrule height 1ex \hfill \kern \z@}
+\def\@makechapterhead#1{%
+
+\thispagestyle{fancy}
+
+  \bgroup
+  \reset@font
+  \parindent \z@
+  \vspace*{10\p@}%
+  \hbox{%
+    \vbox{\hsize=2cm
+      \begin{tabular}{c}
+        \fbox{%
+          \vrule depth 6em width 0pt%
+          \vrule height 0pt depth 0pt width 1ex%
+          {\sffamily\LARGE\bfseries \strut \thechapter}
+          \vrule height 0pt depth 0pt width 1ex%
+          }
+      \end{tabular}%
+      \vskip 0pt
+      }%
+    \vbox{%
+      \advance\hsize by -2cm
+      \hrule\par
+      \vskip 6pt%
+      \Huge \sffamily \bfseries #1
+      }%
+    }%
+  \vskip 70\p@
+  \egroup
+  %\newpage
+}
+\def\fakechapter{\@ifstar\starmyfakechapter\myfakechapter}
+\def\myfakechapter#1{%
+  \bgroup
+  \cleardoublepage
+  \thispagestyle{empty}
+  \addstarredchapter{#1} % avoid problem with minitoc package
+  \markboth{#1}
+  \reset@font
+  \parindent \z@
+  \vspace*{10\p@}%
+  \hbox{%
+    \vbox{\hsize=2cm
+      \begin{tabular}{c}
+        \fbox{%
+          \vrule depth 6em width 0pt%
+          \vrule height 0pt depth 0pt width 1ex%
+          {\LARGE \bfseries \phantom{0}}%
+          \vrule height 0pt depth 0pt width 1ex%
+          }
+      \end{tabular}%
+      \vskip 0pt
+      }%
+    \vbox{%
+      \advance\hsize by -2cm
+      \hrule\par
+      \vskip 6pt%
+      \Huge \sffamily \bfseries #1
+      }%
+    }%
+  \vskip 70\p@
+  \egroup
+}
+\def\starmyfakechapter#1{%
+  \bgroup
+  \cleardoublepage
+  \thispagestyle{empty}
+  \markboth{#1}
+  \reset@font
+  \parindent \z@
+  \vspace*{10\p@}%
+  \hbox{%
+    \vbox{\hsize=2cm
+      \begin{tabular}{c}
+        \fbox{%
+          \vrule depth 6em width 0pt%
+          \vrule height 0pt depth 0pt width 1ex%
+          {\LARGE \bfseries \phantom{0}}%
+          \vrule height 0pt depth 0pt width 1ex%
+          }
+      \end{tabular}%
+      \vskip 0pt
+      }%
+    \vbox{%
+      \advance\hsize by -2cm
+      \hrule\par
+      \vskip 6pt%
+      \Huge \bfseries #1
+      }%
+    }%
+  \vskip 70\p@
+  \egroup
+}
+\def\reallyfakechapter#1{%
+  \bgroup
+  \cleardoublepage
+  \thispagestyle{empty}
+  \markboth{#1}
+  \reset@font
+  \parindent \z@
+  \vspace*{10\p@}%
+  \hbox{%
+    \vbox{\hsize=2cm
+      \begin{tabular}{c}
+        \fbox{%
+          \vrule depth 6em width 0pt%
+          \vrule height 0pt depth 0pt width 1ex%
+          {\LARGE \bfseries \phantom{0}}%
+          \vrule height 0pt depth 0pt width 1ex%
+          }
+      \end{tabular}%
+      \vskip 0pt
+      }%
+    \vbox{%
+      \advance\hsize by -2cm
+      \hrule\par
+      \vskip 6pt%
+      \Huge \bfseries #1
+      }%
+    }%
+  \vskip 70\p@
+  \egroup
+}
+
+
+% -----------------------------------------------------------------------
+%  PART
+% -----------------------------------------------------------------------
+
+% Taken from book.cls
+\newcommand\mypart{%
+  \if@openright
+    \cleardoublepage
+  \else
+    \clearpage
+  \fi
+  \thispagestyle{empty}% %plain
+  \if@twocolumn
+    \onecolumn
+    \@tempswatrue
+  \else
+    \@tempswafalse
+  \fi
+  \null\vfil
+  \secdef\@mypart\@myspart}
+  
+\def\@mypart[#1]#2{%
+    \ifnum \c@secnumdepth >-2\relax
+      \refstepcounter{part}%
+      \addcontentsline{toc}{part}{\scshape\thepart\hspace{1em}\scshape #1}%
+    \else
+      \addcontentsline{toc}{part}{#1}%
+    \fi
+    
+    % new margins
+%%%\newlength{\oldhoffset}
+%%%\setlength{\oldhoffset}{\hoffset}
+%%%\newlength{\oldvoffset}
+%%%\setlength{\oldvoffset}{\voffset}
+
+% These values need to be adjusted manually according to your
+% page layout
+%%%\setlength{\hoffset}{-136pt}
+%%%\setlength{\voffset}{-24pt}
+
+
+        
+    \markboth{}{}%
+    {%\centering
+%     \interlinepenalty \@M
+%     \normalfont
+%     \ifnum \c@secnumdepth >-2\relax
+%       \huge\bfseries \partname\nobreakspace\thepart
+%       \par
+%       \vskip 20\p@
+%     \fi
+%     \Huge \bfseries #2\par}%
+     \pagecolor{green}
+     
+%%%\begin{figure}[h]
+%%%\centering
+%%%\includegraphics[scale=0.75]{part.jpg}
+%%%\end{figure}
+
+\normalcolor
+%\color{white}
+
+\vfill
+
+
+%%%\begin{minipage}[h]{19cm}
+\begin{flushright}
+
+\color{white}
+\normalfont\sffamily\large \partname\nobreakspace\thepart
+
+\color{greenblk}
+\rule{\textwidth}{0.8mm}
+\color{white}
+\normalfont\sffamily\bfseries\Huge #2
+
+\end{flushright}
+%%%\end{minipage}
+
+%%%\setlength{\hoffset}{\oldhoffset}
+%%%\setlength{\voffset}{\oldvoffset}
+}
+
+    \@myendpart}
+\def\@myspart#1{%
+    {\centering
+     \interlinepenalty \@M
+     \normalfont
+     \Huge \bfseries #1\par}%
+          
+    \@myendpart}
+\def\@myendpart{\vfil\newpage\clearpage
+\pagecolor{white}
+
+              \if@twoside
+               \if@openright
+                \null
+                \thispagestyle{fancy}%
+                \newpage
+               \fi
+              \fi
+              \if@tempswa
+                \twocolumn
+              \fi}
+
+% -----------------------------------------------------------------------
+%  SECTION
+% -----------------------------------------------------------------------
+
+% Numéro de section dans la marge
+\def\section{\@ifstar\unnumberedsection\numberedsection}
+\def\numberedsection{\@ifnextchar[%]
+  \numberedsectionwithtwoarguments\numberedsectionwithoneargument}
+\def\unnumberedsection{\@ifnextchar[%]
+  \unnumberedsectionwithtwoarguments\unnumberedsectionwithoneargument}
+\def\numberedsectionwithoneargument#1{\numberedsectionwithtwoarguments[#1]{#1}}
+\def\unnumberedsectionwithoneargument#1{\unnumberedsectionwithtwoarguments[#1]{#1}}
+\def\numberedsectionwithtwoarguments[#1]#2{%
+  \ifhmode\par\fi
+  \removelastskip
+  \vskip 3ex\goodbreak % space above section title (default: 3ex)
+  \refstepcounter{section}%
+  \noindent
+  \begingroup
+  \leavevmode\Large\bfseries\raggedright %
+  \llap{\thesection\quad}%
+  #2
+  \par
+  \endgroup
+  %\noindent\hrulefill\nobreak
+  \vskip 2ex\nobreak % space below section title (default: 1ex)
+  \addcontentsline{toc}{section}{%
+    \protect\numberline{\thesection}%
+    #1}%
+    
+  }
+\def\unnumberedsectionwithtwoarguments[#1]#2{%
+  \ifhmode\par\fi
+  \removelastskip
+  \vskip 3ex\goodbreak % was 3ex
+% \refstepcounter{section}%
+  \noindent
+  \begingroup
+  \leavevmode\Large\bfseries\raggedright
+  \leavevmode\Large\bfseries\raggedright
+% \thesection\quad 
+  #2
+  \par
+  \endgroup
+  \noindent\hrulefill\nobreak
+  \vskip 2ex\nobreak
+  \addcontentsline{toc}{section}{%d
+     \protect\numberline{\thesection}%
+    #1}%
+}
+
+% -----------------------------------------------------------------------
+%  SUBSECTION
+% -----------------------------------------------------------------------
+
+%\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+%                       {-60\p@ \@plus -4\p@ \@minus -4\p@}%
+%                       {4\z@ \@plus 4\p@ \@minus 4\p@}%
+%                       {\Large\sf\bfseries}}
+
+\subsectionfont{\sf\bfseries}
+
+\endinput
+
+%%
+%% End of file `f4-style.sty'.

@@ -1,0 +1,19 @@
+% ===============================================================================
+\section{Overview}
+The package \toolsPkg contains several tools we developed to segment the \droso wing pouch and embryo \autocite{schaffter2013}. In many applications, we expect the tools listed below to be re-used directly \textit{as they are} to support the development of structure detection methods. These tools can also be extended to match specific requirements. In that case, avoid modifying the existing implementations and instead create new classes that extend the original tool classes. If you are developing a novel tool and think that future structure detection methods could benefit from it, please contact us for including it in the official release of \wingj.
+
+% ===============================================================================
+\section{Tools package}
+
+We list below the the detection and segmentation tools we initially implemented for identifying the structure or morphology of the \droso wing pouch and \droso embryo.
+
+\begin{itemize}
+ \item \PlusShapeCenterDetector. Refines the intersection points of the A/P and D/V compartment boundaries included in the \droso wing pouch. Starting from an approximation of the intersection point obtained by projecting the A/P and D/V boundaries on the axes of the image (thus requiring the boundaries to be aligned with the border of the image), translation and rotation operators are applied to center the optimizer on the intersection of the two boundaries.
+ \item \FluorescenceTrajectoryTracker. Implements a tracker that moves along a fluorescent trajectory to parametrize it. The approach is inspired from line-following robots. Initially, a location and orientation is given to the tracker, e.g. the intersection of the A/P and D/V boundaries and one of the direction of one of the four directions identified by the arms of the \KiteSnake (see below). At each step, the optimizer tries to align itself on the boundary using translation and rotation operators before moving forward and aligning itself again. This tool actually extends \PlusShapeCenterDetector.
+ \item \KiteSnake. Implements a snake algorithm for identifying the direction of the four branches of a fluorescent cross-like shape. The angles between two neighbour branches of the shape don't have to be right angles. An approximation of the center of the cross-like shape must be given to the kite snake (e.g. the output of \PlusShapeCenterDetector). The kite snake can either move its arms only, or both its arms and its own center \autocite{schaffter2013}.
+ \item \CompartmentSnake. Implements a snake algorithm for identifying a compartment surrounded by the expression of fluorescence. The snake must be initialized somewhere inside the compartment and its initial shape is a circle. After optimization, the contour of the snake should match the inner contour of the compartment. A term taking into account whether the snake contour should remain convex or not is implemented to prevent the snake to leak outside of a compartment in case where fluorescence are missing somewhere along its contour. Setting the weight associated to the convex term to zero gives the snake more freedom, e.g. to match the contour of more complex compartments \autocite{schaffter2013}.
+ \item \ContourTracer. Square tracing algorithm to identify the contour of an object in a binary image.
+% http://www.imageprocessingplace.com/downloads_V3/root_downloads/tutorials/contour_tracing_Abeer_George_Ghuneim/square.html
+ \item \Skeleton. Generates the skeleton of an object in a binary image.
+%  \item \FlatSphericalGridMaker. Provides tools to create a spherical grid from a \Structure object (for generating circular expression maps).
+\end{itemize}

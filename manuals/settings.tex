@@ -1,0 +1,192 @@
+% ----------------------------------------------------------------------
+%  PACKAGES & DOCUMENT INFO
+% ----------------------------------------------------------------------
+
+\documentclass[a4paper,12pt,twoside,openright,titlepage,onecolumn]{book}
+
+\usepackage[labelfont=bf]{caption}
+\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames]{xcolor}
+\usepackage{hyperref} % configured below
+\usepackage[pdftex]{graphicx}
+\pagestyle{headings} % need to be here, affects the headers
+\usepackage{enumitem}
+\usepackage{xspace}
+\usepackage{minitoc} 
+\usepackage{lmodern} % for having bold+italic in sffamily
+\usepackage{sectsty} % for defining easily the font of the sections
+\usepackage[backend=bibtex,style=nature,autocite=superscript]{biblatex} % style=numeric,sorting=none
+\usepackage{textcomp}
+\usepackage{titlesec} % removes unnecessary spaces between headings, [compact]
+
+%\usepackage[numbers,comma,sort&compress]{natbib} %[super,comma,sort&compress]
+%\usepackage{breakurl}
+
+% ----------------------------------------------------------------------
+%  STYLES
+% ----------------------------------------------------------------------
+
+\usepackage{schaffter2013_manual}
+\usepackage{schaffter2013_manual_toc}
+
+\definecolor{manualDarkBlue}{RGB}{45, 75, 153}
+\definecolor{manualLightBlue}{RGB}{76, 129, 199}
+
+% uses letters for footnotes to remove ambiguity with references
+\renewcommand{\thefootnote}{\alph{footnote}}
+
+% setup hyperref
+\definecolor{mylinkcolor}{RGB}{72,33,139}
+\hypersetup{colorlinks,plainpages=true,urlcolor=Indigo,linkcolor=Indigo,citecolor=Indigo}%,hyperindex
+
+% sets the font of the caption
+\renewcommand\captionfont{\small\sffamily}
+
+% first: indent
+% second: space above title
+% third: space after title
+\titlespacing\subsection{0pt}{12pt plus 0pt minus -12pt}{4pt plus 2pt minus 0pt}
+
+% ----------------------------------------------------------------------
+%  MAIN DEFINITIONS
+% ----------------------------------------------------------------------
+
+% units
+\newcommand{\degree}{${^\circ}$\xspace}
+\newcommand{\px}{px\xspace}
+\newcommand{\pxsquare}{px$^2$\xspace}
+\newcommand{\mum}{\textmu m\xspace}
+\newcommand{\mumsquare}{\textmu m$^2$\xspace}
+\newcommand{\MB}{MB\xspace}
+\newcommand{\GB}{GB\xspace}
+
+% list of words
+\def\insilico{\emph{in silico}\xspace}
+\def\droso{\textit{Dro\-so\-phila}\xspace}
+\def\pent{\textit{pent\textsuperscript{2-5}}\xspace}
+
+% font style for the cross-references (using hyperref[label]{text})
+\newcommand{\crs}{\sffamily\bfseries}
+\newcommand\sectionref[1]{\hyperref[#1]{\crs Section~\ref{#1}}}
+\newcommand\sectionreftwo[2]{\hyperref[#1]{\crs Section~\ref{#1}} and \hyperref[#1]{\crs \ref{#2}}}
+\newcommand\figureref[1]{\hyperref[#1]{\crs Figure~\ref{#1}}}
+\newcommand\figurereftwo[2]{\hyperref[#1]{\crs Figure~\ref{#1}} and \hyperref[#1]{\crs \ref{#2}}}
+\newcommand\figurerefsub[2]{\hyperref[#1]{\crs Figure~\ref{#1}#2}}
+\newcommand\figurerefsubtwo[4]{\hyperref[#1]{\crs Figure~\ref{#1}#2} and \hyperref[#3]{\crs \ref{#3}#4}}
+\newcommand\figref[1]{\hyperref[#1]{\crs Fig.~\ref{#1}}}
+\newcommand\figrefsub[2]{\hyperref[#1]{\crs Fig.~\ref{#1}#2}}
+\newcommand\figrefsubtwo[4]{\hyperref[#1]{\crs Fig.~\ref{#1}#2} and \hyperref[#3]{\crs \ref{#3}#4}}
+\newcommand\equref[1]{\hyperref[#1]{\crs (\ref{#1})}}
+\newcommand\algorithmref[1]{\hyperref[#1]{\crs Algorithm~\ref{#1}}}
+\newcommand\sectionrefoverview[1]{\hyperref[#1]{\crs \sectionref{#1}: \nameref{#1}}}
+
+% others
+\newcommand{\qvec}[1]{\textbf{\textit{#1}}}
+
+% ----------------------------------------------------------------------
+%  WINGJ DEFINITIONS
+% ----------------------------------------------------------------------
+
+\def\wingj{WingJ\xspace}
+\def\wingjMatlab{WingJ Matlab Toolbox\xspace}
+
+% for filenames or URLs
+\def\wingjName{wingj}
+\def\wingjVersion{1.0b}
+
+\def\wingjApi{http://tschaffter.ch/projects/wingj/apis/\wingjVersion/ch/epfl/lis/wingj}
+
+% ----------------------------------------------------------------------
+%  OTHER DEFINITIONS
+% ----------------------------------------------------------------------
+
+\def\gnw{GNW\xspace}
+\def\cytoscape{Cytoscape\xspace}
+\def\eclipse{Eclipse\xspace}
+\def\matlab{Matlab\xspace}
+\def\ij{ImageJ\xspace}
+\def\fiji{Fiji\xspace}
+
+% ----------------------------------------------------------------------
+%  WINGJ URLS
+% ----------------------------------------------------------------------
+
+% main urls
+\def\wingjUrlText{http://lis.epfl.ch/wingj}
+\newcommand{\wingjUrl}{\href{\wingjUrlText}{\wingjUrlText}\xspace}
+\newcommand{\wingjShortUrl}{\href{\wingjUrlText}{lis.epfl.ch/wingj}\xspace}
+\newcommand{\wingjJar}{\href{http://tschaffter.ch/projects/wingj/download.php}{wingj-\wingjVersion\_.jar}\xspace}
+\newcommand{\wingjAPI}{\href{http://tschaffter.ch/projects/wingj/apis/\wingjVersion/}{\wingj API}\xspace}
+
+% user manual
+\def\wingjDeveloperGuide{\wingj Developer Guide\xspace}
+\newcommand{\wingjVideoSOne}{\href{\wingjUrlText}{Development of the \droso wing}\xspace}
+\newcommand{\wingjVideoSTwo}{\href{\wingjUrlText}{Unsupervised detection and quantification of the \droso wing pouch}\xspace}
+\newcommand{\wingjVideoSThree}{\href{\wingjUrlText}{Detection of cell nuclei in the \droso wing pouch}\xspace}
+\newcommand{\testJavaWebsite}{\href{http://java.com/en/download/testjava.jsp}{http://java.com/en/download/testjava.jsp}\xspace}
+\newcommand{\wingjBenchmarkImages}{\href{\wingjUrlText}{\wingj image benchmarks}\xspace}
+
+% package API
+\newcommand{\structurePkg}{\href{\wingjApi/structure/package-summary.html}{structure}\xspace}
+\newcommand{\wingpouchPkg}{\href{\wingjApi/structure/drosophila/wingpouch/package-summary.html}{drosophila.wingpouch}\xspace}
+\newcommand{\wingpouchLongPkg}{\href{\wingjApi/structure/drosophila/wingpouch/package-summary.html}{ch.epfl.lis.wingj.structure.drosophila.wingpouch}\xspace}
+\newcommand{\embryoPkg}{\href{\wingjApi/structure/drosophila/embryo/package-summary.html}{drosophila.embryo}\xspace}
+\newcommand{\embryoLongPkg}{\href{\wingjApi/structure/drosophila/embryo/package-summary.html}{ch.epfl.lis.wingj.structure.drosophila.embryo}\xspace}
+\newcommand{\toolsPkg}{\href{\wingjApi/structure/tools/package-summary.html}{structure.tools}\xspace}
+
+% WJSystemManager API
+\newcommand{\WJSystemManager}{\href{\wingjApi/WJSystemManager.html}{WJSystemManager}\xspace}
+\newcommand{\WJSystem}{\href{\wingjApi/WJSystem.html}{WJSystem}\xspace}
+\newcommand{\WPouchSystem}{\href{\wingjApi/structure/drosophila/wingpouch/WPouchSystem.html}{WPouchSystem}\xspace}
+\newcommand{\EmbryoSystem}{\href{\wingjApi/structure/drosophila/embryo/EmbryoSystem.html}{EmbryoSystem}\xspace}
+
+% \WJStructureViewer
+\newcommand{\WJStructureViewer}{\href{\wingjApi/WJStructureViewer.html}{WJStructureViewer}\xspace}
+
+% structure API
+\newcommand{\Compartment}{\href{\wingjApi/structure/Compartment.html}{Compartment}\xspace}
+\newcommand{\Boundary}{\href{\wingjApi/structure/Boundary.html}{Boundary}\xspace}
+\newcommand{\Structure}{\href{\wingjApi/structure/Structure.html}{Structure}\xspace}
+\newcommand{\StructureSnake}{\href{\wingjApi/structure/StructureSnake.html}{StructureSnake}\xspace}
+
+% wing pouch structure detection API
+\newcommand{\StructureDetector}{\href{\wingjApi/structure/StructureDetector.html}{StructureDetector}\xspace}
+\newcommand{\WPouchStructureDetector}{\href{\wingjApi/structure/drosophila/wingpouch/WPouchStructureDetector.html}{WPouchStructureDetector}\xspace}
+\newcommand{\StructureDetectionModule}{\href{\wingjApi/structure/StructureDetectionModule.html}{StructureDetectionModule}\xspace}
+\newcommand{\WPouchStructureSnake}{\href{\wingjApi/structure/drosophila/wingpouch/WPouchStructureSnake.html}{WPouchStructureSnake}\xspace}
+\newcommand{\WPouchStructure}{\href{\wingjApi/structure/drosophila/wingpouch/WPouchStructure.html}{WPouchStructure}\xspace}
+\newcommand{\InteractiveStructure}{\href{\wingjApi/structure/drosophila/wingpouch/InteractiveStructure.html}{InteractiveStructure}\xspace}
+\newcommand{\WPouchBoundariesDetection}{\href{\wingjApi/structure/drosophila/wingpouch/WPouchBoundariesDetection.html}{WPouchBoundariesDetection}\xspace}
+\newcommand{\PreProcessing}{\href{\wingjApi/structure/drosophila/wingpouch/PreProcessing.html}{PreProcessing}\xspace}
+\newcommand{\WDiscCenterDetection}{\href{\wingjApi/structure/drosophila/wingpouch/WDiscCenterDetection.html}{WDiscCenterDetection}\xspace}
+\newcommand{\WPouchCenterDetection}{\href{\wingjApi/structure/drosophila/wingpouch/WPouchCenterDetection.html}{WPouchCenterDetection}\xspace}
+\newcommand{\WPouchCompartmentsDetection}{\href{\wingjApi/structure/drosophila/wingpouch/WPouchCompartmentsDetection.html}{WPouchCompartmentsDetection}\xspace}
+\newcommand{\WPouchContourDetection}{\href{\wingjApi/structure/drosophila/wingpouch/WPouchContourDetection.html}{WPouchContourDetection}\xspace}
+\newcommand{\WPouchOrientationDetection}{\href{\wingjApi/structure/drosophila/wingpouch/WPouchOrientationDetection.html}{WPouchOrientationDetection}\xspace}
+
+% embryo structure detection API
+\newcommand{\EmbryoContourDetection}{\href{\wingjApi/structure/drosophila/embryo/EmbryoContourDetection.html}{EmbryoContourDetection}\xspace}
+\newcommand{\EmbryoBoundariesDetection}{\href{\wingjApi/structure/drosophila/embryo/EmbryoBoundariesDetection.html}{EmbryoBoundariesDetection}\xspace}
+\newcommand{\EmbryoInteractiveStructure}{\href{\wingjApi/structure/drosophila/embryo/InteractiveStructure.html}{InteractiveStructure}\xspace}
+\newcommand{\EmbryoOrientationDetection}{\href{\wingjApi/structure/drosophila/embryo/EmbryoOrientationDetection.html}{EmbryoOrientationDetection}\xspace}
+\newcommand{\EmbryoStructureDetector}{\href{\wingjApi/structure/drosophila/embryo/EmbryoStructureDetector.html}{EmbryoStructureDetector}\xspace}
+\newcommand{\EmbryoStructureSnake}{\href{\wingjApi/structure/drosophila/embryo/EmbryoStructureSnake.html}{EmbryoStructureSnake}\xspace}
+\newcommand{\EmbryoStructure}{\href{\wingjApi/structure/drosophila/embryo/EmbryoStructure.html}{EmbryoStructure}\xspace}
+
+% tools API
+\newcommand{\FluorescenceTrajectoryTracker}{\href{\wingjApi/structure/tools/FluorescenceTrajectoryTracker.html}{FluorescenceTrajectoryTracker}\xspace}
+\newcommand{\KiteSnake}{\href{\wingjApi/structure/tools/KiteSnake.html}{KiteSnake}\xspace}
+\newcommand{\CompartmentSnake}{\href{\wingjApi/structure/tools/CompartmentSnake.html}{CompartmentSnake}\xspace}
+\newcommand{\FlatSphericalGridMaker}{\href{\wingjApi/structure/tools/FlatSphericalGridMaker.html}{FlatSphericalGridMaker}\xspace}
+\newcommand{\PlusShapeCenterDetector}{\href{\wingjApi/structure/tools/PlusShapeCenterDetector.html}{PlusShapeCenterDetector}\xspace}
+\newcommand{\EllipseFitter}{\href{\wingjApi/structure/tools/EllipseFitter.html}{EllipseFitter}\xspace}
+\newcommand{\ContourTracer}{\href{\wingjApi/structure/tools/ContourTracer.html}{ContourTracer}\xspace}
+\newcommand{\Skeleton}{\href{\wingjApi/structure/tools/Skeleton.html}{Skeleton}\xspace}
+
+% others
+\def\chrome{Google Chrome\xspace}
+\newcommand{\eclipseWebsite}{\href{http://www.eclipse.org/}{eclipse.org}\xspace}
+\newcommand{\javaNamingConventions}{\href{http://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html}{naming conventions}\xspace}
+\newcommand{\ijWebsite}{\href{http://rsb.info.nih.gov/ij}{rsb.info.nih.gov/ij}\xspace}
+\newcommand{\fijiWebsite}{\href{http://fiji.sc}{fiji.sc}\xspace}
+\newcommand{\leicaWebsite}{\href{http://www.leica-microsystems.com}{http://www.leica-microsystems.com}}

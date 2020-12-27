@@ -1,0 +1,94 @@
+% ----------------------------------------------------------------------
+%  PACKAGES & DOCUMENT INFO
+% ----------------------------------------------------------------------
+
+\input ../settings
+
+% ----------------------------------------------------------------------
+%  DOCUMENT INFO
+% ----------------------------------------------------------------------
+
+\def\newtitle{WingJ Developer Guide} % document title
+\def\subtitle{Instructions for extending \wingj structure detection to additional biological systems}
+\def\headerTitle{\newtitle} % displayed on the header of the pages
+\def\revision{Version 1.0 Beta}
+\def\year{2013}
+\def\date{\today}
+
+\def\titleImage{images/wingj-cover_300dpi.jpg}
+\def\titleUrl{\wingjUrl}
+
+% ----------------------------------------------------------------------
+%  AUTHOR INFO
+% ----------------------------------------------------------------------
+
+\def\authornames{Thomas Schaffter, Ricard Delgado-Gonzalo}
+\def\newauthor{by \authornames}
+\def\email{thomas.schaffter@gmail.com}
+
+\newcommand{\schaffterEmail}{\href{mailto:thomas.schaffter@gmail.com}{thomas.schaffter@gmail.com}\xspace}
+\newcommand{\delgadoEmail}{\href{mailto:ricard.delgado@gmail.com}{ricard.delgado@gmail.com}\xspace}
+
+% ----------------------------------------------------------------------
+%  BIBLATEX
+% ----------------------------------------------------------------------
+
+\bibliography{../bib/citations.bib} % add more sources separated by comma
+
+% ----------------------------------------------------------------------
+%  MAIN DOCUMENT
+% ----------------------------------------------------------------------
+
+\title{\newtitle}
+\author{\newauthor}
+
+% DOCUMENT START
+\begin{document}
+\sffamily
+
+% FIRST TITLE PAGE
+\input title
+% white page
+% \pagecolor{white}
+% \clearpage\thispagestyle{empty}\mbox{}\clearpage
+
+% SECOND TITLE PAGE
+\input wingj_devguide_title2
+% white page
+% \clearpage\thispagestyle{empty}\mbox{}\clearpage
+
+% TABLE OF CONTENTS
+\tableofcontents
+\clearpage\thispagestyle{empty}\mbox{}\clearpage
+
+% DOCUMENT
+\mainmatter
+\setlength{\parindent}{0in}
+ 
+% \mypart{Getting Started}
+\chapter{Getting Started}
+\input wingj_devguide_getting_started
+
+\chapter{Structure Detection}
+\input wingj_devguide_structure_detection
+
+\chapter{Image Processing Tools}
+\input wingj_devguide_segmentation_tools
+
+% BIBLIOGRAPHY
+\renewcommand{\bibname}{References}
+%\defbibheading{myheading}{
+%  \chapter*{\Huge\sffamily\bfseries #1}
+%}
+\defbibheading{myheading}{ % defines the style of the biblio heading
+  \reallyfakechapter{#1}
+  \phantomsection{} \thispagestyle{empty}
+}
+
+\renewcommand*{\bibfont}{\sffamily} % defines the font style of the bibitems
+\printbibliography[heading=myheading]
+
+%\bibliographystyle{natbib}
+%\bibliography{../bib/citations}
+% \nocite{*}
+\end{document}

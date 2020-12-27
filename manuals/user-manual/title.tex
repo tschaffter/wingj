@@ -1,0 +1,79 @@
+% ----------------------------------------------------------------------
+%  FIRST TITLE PAGE
+% ----------------------------------------------------------------------
+
+\parindent0pt
+\thispagestyle{empty}
+
+% color
+\pagecolor{manualDarkBlue}
+
+% new margins
+\newlength{\oldhoffset}
+\setlength{\oldhoffset}{\hoffset}
+\newlength{\oldvoffset}
+\setlength{\oldvoffset}{\voffset}
+
+% These values need to be adjusted manually according to your
+% page layout
+% \setlength{\hoffset}{-136pt}
+% \setlength{\voffset}{-100pt}
+\setlength{\hoffset}{-162pt}
+\setlength{\voffset}{-100pt}
+
+\begin{minipage}[t]{20cm}
+\begin{flushright}
+
+% \color{jmoddkblue}
+%\rule{\textwidth}{0.3mm}
+
+\normalfont\sffamily\large
+
+\color{white}
+\normalsize\revision\\
+
+\color{white}
+\sffamily\normalsize\date
+
+\end{flushright}
+\end{minipage}
+
+% Figure
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=210mm]{\titleImage}
+
+\end{figure}
+
+% Text
+
+\begin{minipage}[h]{20cm}
+\begin{flushright}
+
+\normalcolor
+
+\color{manualLightBlue}
+\rule{\textwidth}{1.2mm}
+
+\color{white}
+
+\sffamily\Huge\bfseries \newtitle \\ 
+\sffamily\large\mdseries \subtitle\\
+
+\color{manualLightBlue}
+\rule{\textwidth}{1.2mm}
+
+\color{white}
+\normalfont\sffamily\small\authornames\\
+
+\end{flushright}
+\end{minipage}
+
+
+% Reset to the `default' page layout (the one you probably
+% defined in your main TeX file)
+\pagebreak
+\normalcolor
+\setlength{\hoffset}{\oldhoffset}
+\setlength{\voffset}{\oldvoffset}

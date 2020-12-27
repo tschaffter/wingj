@@ -1,0 +1,49 @@
+% Copyright (c) 2010-2012 Thomas Schaffter
+% 
+% This file is licensed under a
+% Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License.
+% 
+% You should have received a copy of the license along with this
+% work. If not, see http://creativecommons.org/licenses/by-nc-nd/3.0/.
+% 
+% If this software was useful for your scientific work, please cite our paper(s)
+% listed on http://tschaffter.ch.
+% 
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+% THE SOFTWARE.
+%
+% Adapted from the Latex document written by Xavier Perseguers.
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{schaffter2013_manual_toc}
+  [2006/05/22 v.2
+  Table of Contents (TOC) for LaTeX]
+\RequirePackage{schaffter2013_manual}
+
+% Begin
+\setcounter{tocdepth}{2} % 1 = Only show up to Section Level (not Subsection)
+\renewcommand\tableofcontents{%
+  \let\origcontentsname=\contentsname
+  \def\contentsname{Contents}
+
+  \if@twocolumn
+    \@restonecoltrue\onecolumn
+  \else
+    \@restonecolfalse
+  \fi
+  %\fakechapter*{\contentsname}%
+  \reallyfakechapter{\contentsname}
+  \phantomsection{} \thispagestyle{empty}
+  \@starttoc{toc}%
+  \if@restonecol\twocolumn\fi
+  
+  \def\contentsname{\origcontentsname}
+}
+\endinput
+%%
+%% End of file
