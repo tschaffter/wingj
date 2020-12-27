@@ -26,8 +26,17 @@
 		</tr>
 		<tr valign="top">
 			<td class="content_box_middle">
-				<h2 class="box_header">Virtual Drosophila wing</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui o?cia deserunt mollit anim id est laborum.</p>
+				<h2 class="box_header" id="mean_models">Robust Quantitative Model of the Drosophila Wing Pouch</h2>
+
+				<p>A contribution of the WingJ project is to enable the integration of phenotypic and expression data collected from many individual systems. The goal is to obtain a <strong>single and reliable multiscale model generated from multiple "snapshots"</strong> of the system studied. We envision that such quantitative models will be very useful in scientific research, in particular for reverse engineering predictive multiscale models of biological organisms.</p>
+
+				<p>
+				The interface below enable to visualize a quantitative model of the developing <i>Drosophila</i> wing. This model can be used to gain insights into the domains of expression of different gene products in wild type and <i>pentagone</i> deficient wings at different time points during development. The gene products are respectively associated to the red, green and blue image channels to produce RGB images.
+				</p>
+
+				<p>
+				<strong>For each experimental condition, the shape of the wing has been generated from the individual structure of fifteen to thirty wings</strong>. The dashed line represents the <i>standard deviation</i> of the structure models. The domain of expression of each gene product corresponds to a mean expression map computed from five to ten individual wings. Both the individual and combined snapshots have been generated using <a href="https://github.com/tschaffter/wingj">WingJ</a>.
+				</p>
 				<table>
 				<tr>
 					<td valign="top" width="100">
@@ -59,10 +68,10 @@
 								<!-- <option value="wg-ptcAB" selected="selected">Wg-Ptc-AB</option> -->
 								<option value="none">None</option>
 							</select></p>
-							
+
 							<p><input type="radio" name="genotypes" onclick="updateWingViewer()" value="wt" checked = "checked">Wild type<br>
 							<input type="radio" name="genotypes" onclick="updateWingViewer()" value="pent"><i>Pent<sup>2-5</sup></i></p>
-							
+
 							<p><input type="radio" name="ages" onclick="updateWingViewer()" value="80h" checked = "checked">80 hours<br>
 							<input type="radio" name="ages" onclick="updateWingViewer()" value="90h">90 hours<br>
 							<input type="radio" name="ages" onclick="updateWingViewer()" value="100h">100 hours<br>
@@ -81,17 +90,17 @@
 						</td>
 					</tr>
 					</table>
-					<p><span class="note">Anterior at left, dorsal at top; the dashed line represents the standard deviation of the structure; click on the image to enlarge it.</span></p>
+
+					<p>Click on the image to enlarge it. Right-click on the image and select <i>Save link as...</i> to save the image in high quality. Anterior is left and dorsal is top (canonical orientation).</p>
 			</td>
 		</tr>
 		<tr valign="top">
 			<td class="content_box_bottom"></td>
 		</tr>
 	</table>
-	
+
 	<!-- LAST UPDATE LAST UPDATE LAST UPDATE LAST UPDATE LAST UPDATE LAST UPDATE LAST UPDATE -->
-	<h6>Thomas Schaffter (thomas.schaff...@gmail.com)<br>
-	Project webpage: <a href="http://tschaffter.ch/projects/wingj" target="_blank">http://tschaffter.ch/projects/wingj</a></h6>
+	<h6>Project webpage: <a href="https://github.com/tschaffter/wingj">https://github.com/tschaffter/wingj</a></h6>
 
 	</center>
 </body>
