@@ -11,8 +11,8 @@ ImageJ plugin for unsupervised and systematic segmentation of *Drosophila* wing 
 
 Manuals:
 
-- [User Manual](manuals/wingj-user-manual.pdf)
-- [Developer Manual](manuals/wingj-developer-manual.pdf)
+- [User Manual (PDF)](manuals/wingj-user-manual.pdf)
+- [Developer Manual (PDF)](manuals/wingj-developer-manual.pdf)
 
 Videos:
 
