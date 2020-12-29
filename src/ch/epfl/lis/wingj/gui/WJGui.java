@@ -205,9 +205,9 @@ public class WJGui extends JFrame {
 	protected JButton expressionBackButton_;
 	
 	/** Selected gene whose expression will be measured. */
-	protected JComboBox<String> expressionSelectedChannelCBox_;
+	protected JComboBox expressionSelectedChannelCBox_;
 	/** Select type of expression dataset for preview. */
-	protected JComboBox<String> expressionDimensionDatasetCBox_;
+	protected JComboBox expressionDimensionDatasetCBox_;
 	
 	/** Message bar. */
 	protected AppTips msgBar_ = null;
@@ -268,7 +268,7 @@ public class WJGui extends JFrame {
 	protected JCheckBox showOverlayInformationCBox_;
 	protected JCheckBox showOverlayStructureCBox_;
 	protected JButton setColorButton_;
-	protected JComboBox<String> backgroundCBox_;
+	protected JComboBox backgroundCBox_;
 	protected JButton swapBoundariesButton_;
 	protected JButton reverseDVBoundaryButton_;
 	protected JButton reverseAPBoundaryButton_;
@@ -290,7 +290,7 @@ public class WJGui extends JFrame {
 	protected JPanel structurePanel_;
 	protected JPanel batchPanel_;
 	protected JPanel expressionPanel_;
-	protected JComboBox<String> systemCBox_;
+	protected JComboBox systemCBox_;
 	protected JSpinner ch00MinSliceIndex_;
 	protected JSpinner ch00MaxSliceIndex_;
 	protected JSpinner ch01MinSliceIndex_;
@@ -314,7 +314,7 @@ public class WJGui extends JFrame {
 	/** Contains the spinner for the max index of each channel */
 	protected List<JSpinner> maxSliceIndexes_ = null;
 	private JLabel lblPointsPerSegment;
-	protected JComboBox<String> expression1DBoundaryCBox_;
+	protected JComboBox expression1DBoundaryCBox_;
 	protected JSlider expression1DTranslationSlider_;
 	protected JSpinner expression1DTranslationSpinner_;
 	protected JSlider expression1DSigmaSlider_;
@@ -365,9 +365,9 @@ public class WJGui extends JFrame {
 	protected JButton exportProjections_;
 	private Component horizontalStrut_1;
 	protected JPanel expressionCompositePanel_;
-	protected JComboBox<String> expressionCompositeRedCBox_;
-	protected JComboBox<String> expressionCompositeGreenCBox_;
-	protected JComboBox<String> expressionCompositeBlueCBox_;
+	protected JComboBox expressionCompositeRedCBox_;
+	protected JComboBox expressionCompositeGreenCBox_;
+	protected JComboBox expressionCompositeBlueCBox_;
 	private Component horizontalStrut_2;
 	private JPanel expressionSuperSnakePanel;
 	private Component horizontalStrut_3;
@@ -434,7 +434,7 @@ public class WJGui extends JFrame {
 					wdPanel.add(organismLabel, gbc_organismLabel);
 				}
 				{
-					systemCBox_ = new JComboBox<String>();
+					systemCBox_ = new JComboBox();
 					systemCBox_.setToolTipText("Select a biological system to quantify");
 					GridBagConstraints gbc_systemCBoxd_ = new GridBagConstraints();
 					gbc_systemCBoxd_.fill = GridBagConstraints.HORIZONTAL;
@@ -1336,7 +1336,7 @@ public class WJGui extends JFrame {
 					panel.add(lblBackgroundImage, gbc_lblBackgroundImage);
 				}
 				{
-					backgroundCBox_ = new JComboBox<String>();
+					backgroundCBox_ = new JComboBox();
 					backgroundCBox_.setToolTipText("Set the background image of the structure viewer");
 					GridBagConstraints gbc_backgroundCBox_ = new GridBagConstraints();
 					gbc_backgroundCBox_.anchor = GridBagConstraints.WEST;
@@ -1822,9 +1822,9 @@ public class WJGui extends JFrame {
 				expressionPanel_1.add(lblDimension, gbc_lblDimension);
 			}
 			{
-				expressionDimensionDatasetCBox_ = new JComboBox<String>();
+				expressionDimensionDatasetCBox_ = new JComboBox();
 				expressionDimensionDatasetCBox_.setToolTipText("Type of expression dataset");
-				expressionDimensionDatasetCBox_.setModel(new DefaultComboBoxModel<String>(new String[] {"Individual profiles", "Individual maps", "Reverse individual maps", "Mean models", "Composite images"}));
+				expressionDimensionDatasetCBox_.setModel(new DefaultComboBoxModel(new String[] {"Individual profiles", "Individual maps", "Reverse individual maps", "Mean models", "Composite images"}));
 				GridBagConstraints gbc_expressionDatasetType_ = new GridBagConstraints();
 				gbc_expressionDatasetType_.anchor = GridBagConstraints.WEST;
 				gbc_expressionDatasetType_.insets = new Insets(5, 5, 5, 5);
@@ -1860,7 +1860,7 @@ public class WJGui extends JFrame {
 				expressionPanel_1.add(lblSelection, gbc_lblSelection);
 			}
 			{
-				expressionSelectedChannelCBox_ = new JComboBox<String>();
+				expressionSelectedChannelCBox_ = new JComboBox();
 				expressionSelectedChannelCBox_.setToolTipText("Selected image channel");
 				GridBagConstraints gbc_expressionSelectedGeneCBox_ = new GridBagConstraints();
 				gbc_expressionSelectedGeneCBox_.fill = GridBagConstraints.HORIZONTAL;
@@ -1942,9 +1942,9 @@ public class WJGui extends JFrame {
 					expression1DPanel_.add(lblBoundary, gbc_lblBoundary);
 				}
 				{
-					expression1DBoundaryCBox_ = new JComboBox<String>();
+					expression1DBoundaryCBox_ = new JComboBox();
 					expression1DBoundaryCBox_.setToolTipText("Reference boundary");
-					expression1DBoundaryCBox_.setModel(new DefaultComboBoxModel<String>(new String[] {"Dorsal/ventral", "Anterior/posterior"}));
+					expression1DBoundaryCBox_.setModel(new DefaultComboBoxModel(new String[] {"Dorsal/ventral", "Anterior/posterior"}));
 					GridBagConstraints gbc_expression1DBoundaryCBox_ = new GridBagConstraints();
 					gbc_expression1DBoundaryCBox_.anchor = GridBagConstraints.WEST;
 					gbc_expression1DBoundaryCBox_.insets = new Insets(0, 5, 5, 5);
@@ -2576,8 +2576,8 @@ public class WJGui extends JFrame {
 					redColor.setToolTipText("");
 				}
 				{
-					expressionCompositeRedCBox_ = new JComboBox<String>();
-					expressionCompositeRedCBox_.setModel(new DefaultComboBoxModel<String>(new String[] {"0", "1", "2", "3", "None"}));
+					expressionCompositeRedCBox_ = new JComboBox();
+					expressionCompositeRedCBox_.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "None"}));
 					expressionCompositeRedCBox_.setSelectedIndex(0);
 					expressionCompositeRedCBox_.setToolTipText("Select the channel to display in red in the composite image");
 					GridBagConstraints gbc_expressionCompositeRedCBox_ = new GridBagConstraints();
@@ -2606,8 +2606,8 @@ public class WJGui extends JFrame {
 					expressionCompositePanel_.add(lblGreen, gbc_lblGreen);
 				}
 				{
-					expressionCompositeGreenCBox_ = new JComboBox<String>();
-					expressionCompositeGreenCBox_.setModel(new DefaultComboBoxModel<String>(new String[] {"0", "1", "2", "3", "None"}));
+					expressionCompositeGreenCBox_ = new JComboBox();
+					expressionCompositeGreenCBox_.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "None"}));
 					expressionCompositeGreenCBox_.setSelectedIndex(1);
 					expressionCompositeGreenCBox_.setToolTipText("Select the channel to display in green in the composite image");
 					GridBagConstraints gbc_expressionCompositeGreenCBox_ = new GridBagConstraints();
@@ -2627,8 +2627,8 @@ public class WJGui extends JFrame {
 					expressionCompositePanel_.add(lblBlue, gbc_lblBlue);
 				}
 				{
-					expressionCompositeBlueCBox_ = new JComboBox<String>();
-					expressionCompositeBlueCBox_.setModel(new DefaultComboBoxModel<String>(new String[] {"0", "1", "2", "3", "None"}));
+					expressionCompositeBlueCBox_ = new JComboBox();
+					expressionCompositeBlueCBox_.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "None"}));
 					expressionCompositeBlueCBox_.setSelectedIndex(2);
 					expressionCompositeBlueCBox_.setToolTipText("Select the channel to display in blue in the composite image");
 					GridBagConstraints gbc_expressionCompositeBlueCBox_ = new GridBagConstraints();
