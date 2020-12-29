@@ -43,7 +43,30 @@ java -jar wingj.jar
 WingJ is also available as a plugin that can be added to an existing installation
 of ImageJ. See below for more information.
 
-## Build
+## Developpment
+
+### A note from December 2020
+
+The version of Java used to develop WingJ in 2011-2014 is Version 6 (1.6). The
+current version of Java (Version 11) is missing a few standard components that
+were available in Version 6. These components are only related to XML parsers
+that are used to read and write morphological structures to files. Today, the
+prefered solution would be save the structure to JSON format. WingJ could then
+be built using the current release of Java.
+
+Note that the current release of WingJ built with Java Version 6 SDK can still
+be run by Java Version 11 JRE.
+
+
+
+
+## Building
+
+The version of Java used to develop WingJ in 2011-2014 was 1.6.
+
+
+
+
 
 ### Export WingJ as a plugin for ImageJ
 
