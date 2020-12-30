@@ -54,15 +54,42 @@ that are used to read and write morphological structures to files. Today, the
 prefered solution would be save the structure to JSON format. WingJ could then
 be built using the current release of Java.
 
-Note that the current release of WingJ built with Java Version 6 SDK can still
+Note that the current release of WingJ built with Java SDK Version 6 can still
 be run by Java Version 11 JRE.
 
+To build WingJ, you need to download *jdk-6u45-linux-i586.bin* or the equivalent
+file for your platform from [Oracle Archives]. Alternatively, the file
+*jdk-6u45-linux-i586.bin* is also available in the folder [legacy/java](legacy/java).
+
+On Linux, extract the content of Java SDK Version 6 with `./jdk-6u45-linux-i586.bin`,
+then configure the project WingJ in Eclipse to use the extracted folder as an
+alternative JRE System Library.
+
+### Initialize the development environment
+
+Run the command below once to create the directories required to build this
+project.
+
+```bash
+ant init
+```
+
+### Building WingJ as an ImageJ Plugin
+
+Run the command below to package WingJ into a JAR file `build/wingj-${version}_.jar`
+that will be placed in the root folder of this project. The string `${version}`
+is replaced by the version number specified in `build.xml`.
+
+```bash
+ant install
+```
+
+The trailing underscore ('_') is used by ImageJ to automatically identify and
+register its plugins.
+
+### Add WingJ to ImageJ
 
 
-
-## Building
-
-The version of Java used to develop WingJ in 2011-2014 was 1.6.
 
 
 
@@ -101,3 +128,6 @@ you need first to build the plugin (see above) or download the version available
 
 - Add *wingj_.jar* to the *plugins* folder of ImageJ
 - In ImageJ: ImageJ > Menu *Plugins* > *WingJ* to start WingJ
+
+
+[Oracle Archives]: https://www.oracle.com/java/technologies/javase-java-archive-javase6-downloads.html
