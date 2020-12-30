@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="wingj" default="install" basedir=".">
-	<property name="version" value="1.0" />
+	<property name="version" value="1.1" />
 	<property name="src" location="src" />
 	<property name="lib" location="lib" />
 	<property name="bin" location="bin" />
 	<property name="compile.debug" value="true" />
 	<!--<property name="imagej" location="/home/tschaffter/devel/java/imagej/" />--> <!-- ImageJ folder -->
     <!--<property name="jar" location="${imagej}/lib/${ant.project.name}-${version}_.jar" />--> <!-- WingJ binary -->
-	<property name="jar" location="${lib}/${ant.project.name}_.jar" />
-
-	<!-- Initialization target, for any prelimary setup needed to build -->
+	<property name="jar" location="${ant.project.name}-${version}_.jar" />
+	
 	<target name="init" description="Preparation">
 		<mkdir dir="${src}" />
 		<mkdir dir="${lib}" />
 		<mkdir dir="${bin}" />
 	</target>
+	
+	<path id="project.class.path">
+	  <fileset dir="${lib}">
+	    <include name="**/*.jar"/>
+	  </fileset>
+	</path>
 
-	<!-- Compiles .java files inside the $src directory -->
-	<target name="compile" depends="init" description="Compile code">
+	<target name="compile" depends="clean" description="Compile code">
 		<echo message="java.version			= ${java.version}" />
 		<echo message="java.vm.name			= ${java.vm.name} "/>
 		<echo message="java.vm.version		= ${java.vm.version}" />
@@ -32,17 +36,16 @@
 			target="1.6"
 			includeAntRuntime="no"
 			debug="${compile.debug}">
+			<classpath refid="project.class.path"/>
 		</javac>
 	</target>
 	
-	<!-- classpathref="lib.path" -->
-	
-    <target name="install" depends="compile" description="Copy classes to ImageJ plugin directory">
+	<target name="install" depends="compile" description="Create WingJ plugin for ImageJ">
         <jar destfile="${jar}" basedir="${bin}" />
     </target>
 
     <target name="clean" description="Clean up build products">
-        <delete dir="${bin}" />
+        <delete dir="${bin}/*" />
     </target>
 </project>
 
